@@ -5,7 +5,7 @@
         @foreach (var item in Model)
          {
             <li>
-                <a href="#!" class="d-flex">
+                <a href="/blogs/getcategoryblogs/@item.Id" class="d-flex">
                     @item.Name
                     <small class="ml-auto">(@item.Count)</small>
                 </a>

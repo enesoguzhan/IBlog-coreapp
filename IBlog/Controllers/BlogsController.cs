@@ -23,5 +23,14 @@ namespace IBlog.UI.Controllers
             var data = blogsService.GetBlogAllInclude(id).Result;
             return View(data);
         }
+
+        [HttpGet]
+        [Route("/blogs/getcategoryblogs/{id:Guid}")]
+        public IActionResult GetCategoryBlogs(Guid id)
+        {
+            var data = blogsService.GetAllBlogsGetByCategoriesAsync(id).Result;
+            ViewBag.Title = $"{data.First().Categories.Name} Blogları";
+            return View(data);
+        }
     }
 }

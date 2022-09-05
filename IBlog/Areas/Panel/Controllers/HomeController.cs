@@ -21,14 +21,14 @@ namespace IBlog.Areas.Panel.Controllers
         {
             EmailDTO email = new()
             {
-                To = "fohev68470@vpsrec.com",
-                Body = "<h3>Sea HosGeldin</h3>",
+                To = "",
+                Body = "<h3> IBlog'a Hoşgeldin</h3>",
                 Subject = "IBlog Hoşgeldin"
             };
 
-          // emailService.SendEmail(email);
+          //  emailService.SendEmail(email);
             ViewBag.Title = "Kategori";
-           
+
 
             return View();
         }

@@ -1,4 +1,5 @@
 ﻿using IBlog.Business.Abstract;
+using IBlog.Entities.DTO.Blogs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBlog.UI.ViewComponents
@@ -14,7 +15,7 @@ namespace IBlog.UI.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var data = _blogsService.GetLastAddedBlogs().Result;
+            IList<LastAddedBlogsDTO> data = _blogsService.GetLastAddedBlogs().Result;
             return View(data);
         }
     }

@@ -1,5 +1,5 @@
 ﻿using IBlog.Business.Abstract;
-using IBlog.Business.Concrete;
+using IBlog.Entities.DTO.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBlog.UI.ViewComponents
@@ -15,7 +15,7 @@ namespace IBlog.UI.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var data = categoriesService.GetCategoriesCount().Result;
+            IList<CategoriesListCountDTO> data = categoriesService.GetCategoriesCount().Result;
             return View(data);
         }
     }

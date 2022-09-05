@@ -50,7 +50,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<Blogs>> GetAllBlogsGetByCategoriesAsync(Guid categoriesId)
         {
-            return await unitOfWork.blogsRepo.AsyncGetAll(s => s.CategoryId == categoriesId);
+            return await unitOfWork.blogsRepo.AsyncGetAll(s => s.CategoryId == categoriesId,s=>s.Images,s=>s.Categories,s=>s.User);
         }
 
         public async Task<Blogs> GetBlog(Guid id)
@@ -65,7 +65,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<LastAddedBlogsDTO>> GetLastAddedBlogs()
         {
-            IList<Blogs> data = unitOfWork.blogsRepo.AsyncGetAll().Result.OrderByDescending(s => s.PublishDateTime).Take(3).ToList();
+            IList<Blogs> data = unitOfWork.blogsRepo.AsyncGetAll(null,s=>s.Images).Result.OrderByDescending(s => s.PublishDateTime).Take(3).ToList();
             return await Task.Run(() => mapper.Map<IList<LastAddedBlogsDTO>>(data));
         }
 

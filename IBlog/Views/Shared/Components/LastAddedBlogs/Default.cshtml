@@ -3,12 +3,12 @@
 <div class="widget">
     <h5 class="widget-title"><span>Son Eklenenler</span></h5>
     <!-- post-item -->
-    @foreach (var item in Model)    
+    @foreach (var item in Model)
     {
         <ul class="list-unstyled widget-list">
             <li class="media widget-post align-items-center">
                 <a href="/blogs/detail/@item.Id">
-                    <img loading="lazy" class="mr-3" src="/images/@item.Images.First().Name">
+                    <img loading="lazy" class="mr-3" src="/images/@item.Images.FirstOrDefault().Name">
                 </a>
                 <div class="media-body">
                     <h5 class="h6 mb-0">

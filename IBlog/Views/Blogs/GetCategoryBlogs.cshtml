@@ -1,0 +1,51 @@
+﻿
+<div class="col-lg-8  mb-5 mb-lg-0">
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var blog in Model)
+        {
+            <article class="row mb-5">
+                <div class="col-12">
+                    <div class="post-slider">
+                        @foreach (var images in blog.Images)
+                        {
+                            <img style="width:500px;height:500px;" loading="lazy" src="/images/@images.Name" class="img-fluid" alt="post-thumb">
+                        }
+
+                    </div>
+                </div>
+                <div class="col-12 mx-auto">
+                    <h3><a class="post-title" href="/blogs/detail/@blog.Id">@blog.Name</a></h3>
+                    <ul class="list-inline post-meta mb-4">
+                        <li class="list-inline-item">
+                            <i class="ti-user mr-2"></i>
+                            <a href="/authors/@blog.User.Id">@blog.User.Name @blog.User.Surname</a>
+                        </li>
+                        <li class="list-inline-item">Tarih : @blog.PublishDateTime</li>
+                        <li class="list-inline-item">
+                            Kategori : <a href="#!" class="ml-1">@blog.Categories.Name </a>
+                        </li>
+                    </ul>
+                    <p>
+                        @if (blog.Explanation.Length > 100)
+                        {
+
+                            @Html.Raw(blog.Explanation.Substring(0, 100) + "...")
+                        }
+                        else
+                        {
+                            @blog.Explanation
+                        }
+                    </p>
+                    <a href="/blogs/detail/@blog.Id" class="btn btn-outline-primary">Okumaya Devam Et</a>
+                </div>
+            </article>
+        }
+    }
+</div>
+<aside class="col-lg-4">
+    <!-- categories -->
+    @await Component.InvokeAsync("GetCategories")
+    <!-- latest post -->
+    @await Component.InvokeAsync("LastAddedBlogs")    
+</aside>
