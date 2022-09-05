@@ -1,0 +1,15 @@
+﻿@model IList<IBlog.Entities.DTO.Categories.CategoriesListCountDTO>
+<div class="widget">
+    <h5 class="widget-title"><span>Kategoriler</span></h5>
+    <ul class="list-unstyled widget-list">
+        @foreach (var item in Model)
+         {
+            <li>
+                <a href="#!" class="d-flex">
+                    @item.Name
+                    <small class="ml-auto">(@item.Count)</small>
+                </a>
+            </li>
+         }
+    </ul>
+</div>

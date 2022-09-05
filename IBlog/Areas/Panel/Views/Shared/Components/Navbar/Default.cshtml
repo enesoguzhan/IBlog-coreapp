@@ -1,0 +1,33 @@
+﻿<div class="sidebar-collapse">
+    <ul class="nav metismenu" id="side-menu">
+        <li class="nav-header">
+            <div class="dropdown profile-element">
+                <span>
+                    <img alt="image" class="img-circle" src="/images/@ViewBag.UserInfo.AvatarImage" />
+                </span>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <span class="clear">
+                        <span class="block m-t-xs">
+                            <strong class="font-bold">@ViewBag.UserInfo.NameSurname</strong>
+                        </span> <span class="text-muted text-xs block">@ViewBag.UserInfo.Role <b class="caret"></b></span>
+                    </span>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                    <li><a href="/panel/users/Index/@ViewBag.UserInfo.Id">Profil Düzenle</a></li>            
+                    <li class="divider"></li>
+                    <li><a href="login.html">Çıkış Yap</a></li>
+                </ul>
+            </div>
+            <div class="logo-element">
+                @ViewBag.UserInfo.NameSurnameFirstChar
+            </div>
+        </li>
+        <li>
+            <a href="/panel/categories/Index"><i class="fa fa-flask"></i> <span class="nav-label">Kategoriler</span></a>
+        </li>
+        <li>
+            <a href="/panel/blogs/Index"><i class="fa fa-flask"></i> <span class="nav-label">Bloglar</span></a>
+        </li>
+
+    </ul>
+</div>

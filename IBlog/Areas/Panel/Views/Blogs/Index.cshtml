@@ -1,0 +1,66 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kategori Listesi</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/panel/home/Index">Ana Sayfa</a>
+            </li>
+            <li class="active">
+                <strong>Kategoriler</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Kategori Listesi</h5>
+                </div>
+                <div class="ibox-content">
+                    <a href="/panel/blogs/Insert" class="btn btn-primary">Yeni</a>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Adı</th>
+                                    <th>Kategori Adı</th>                                    
+                                    <th>Yayınlanma Tarihi</th>                                    
+                                    <th>Durum</th>                                    
+                                    <th style="width:10%;">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Categories.Name</td>
+                                        <td>@item.PublishDateTime</td>
+                                        <td>
+                                            @if (item.Status)
+                                            {
+                                                <label style="color:green">Aktif</label>
+                                            }
+                                            else
+                                            {
+                                                <label style="color:red">Pasif</label>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-outline btn-success" href="/Panel/Blogs/Update/@item.Id">Güncelle</a>
+                                            <a class="btn btn-sm btn-outline btn-danger">Sil</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

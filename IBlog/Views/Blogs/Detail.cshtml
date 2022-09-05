@@ -1,0 +1,32 @@
+﻿
+    <div class="container">
+        <article class="row mb-4">
+            <div class="col-lg-10 mx-auto mb-4">
+                <h1 class="h2 mb-3">@Model.Name</h1>
+                <ul class="list-inline post-meta mb-3">
+                    <li class="list-inline-item">
+                        <i class="ti-user mr-2"></i><a href="author.html">
+                           @Model.User.Name @Model.User.Surname
+                        </a>
+                    </li>
+                    <li class="list-inline-item">Yayınlanma Tarihi : @Model.PublishDateTime</li>
+                    <li class="list-inline-item">
+                        Kategori : <a href="#!" class="ml-1">@Model.Categories.Name </a>
+                    </li>                  
+                </ul>
+            </div>
+            <div class="col-9 mb-3 container">
+                <div class="post-slider">
+                    @foreach (var images in Model.Images)
+                    {
+                        <img style="width:200px;height:400px;" src="/images/@images.Name" class="img-fluid" alt="post-thumb">
+                    }
+                </div>
+            </div>
+            <div class="col-lg-10 mx-auto">
+                <div class="content">
+                    <p>@Model.Explanation</p>
+                </div>
+            </div>
+        </article>
+    </div>
