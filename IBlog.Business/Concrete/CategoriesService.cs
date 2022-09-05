@@ -36,7 +36,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<CategoriesListCountDTO>> GetCategoriesCount()
         {
-            var data = unitOfWork.categoriesRepo.AsyncGetAll(s=>s.Blogs.Count > 0).Result;
+            var data = unitOfWork.categoriesRepo.AsyncGetAll(s=>s.Blogs.Count > 0,s=>s.Blogs).Result;
             
             return await Task.Run(() => mapper.Map<IList<CategoriesListCountDTO>>(data));
         }

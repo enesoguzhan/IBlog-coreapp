@@ -17,8 +17,7 @@ namespace IBlog.Business.EmailService
         }
 
         public void SendEmail(EmailDTO request)
-        {
-            var aa = configuration.GetSection("EmailHost").Value;
+        {           
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(configuration.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
@@ -30,7 +29,6 @@ namespace IBlog.Business.EmailService
             smtp.Authenticate(configuration.GetSection("EmailUsername").Value, configuration.GetSection("EmailPassword").Value);
             smtp.Send(email);
             smtp.Disconnect(true);
-
         }
     }
 }
