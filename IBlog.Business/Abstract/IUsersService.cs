@@ -10,6 +10,7 @@ namespace IBlog.Business.Abstract
         public Task<IResult> UpdateAsync(Guid id,Users data);
         public Task<IResult> DeleteAsync(Guid id);
         public Task<IList<Users>> GetAllUsers();
+        public Task<IList<UserListDTO>> GetUsersList();
         public Task<Users> GetUser(Guid id);
         public Task<Users> LoginAsync(string Email, string Password);
         public Task<string> PaswordForgotAsync(string Email);

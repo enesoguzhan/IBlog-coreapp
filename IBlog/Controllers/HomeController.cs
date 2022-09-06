@@ -15,7 +15,7 @@ namespace IBlog.UI.Controllers
         public IActionResult Index()
         {
             ViewBag.Title = "Ana Sayfa";
-            var dataList = blogsService.GetAllBlogsAsync().Result; 
+            var dataList = blogsService.GetAllBlogsActiveAsync().Result; 
             return View(dataList);
         }
     }

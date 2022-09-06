@@ -20,14 +20,25 @@ namespace IBlog.UI.Areas.Panel.Controllers
         {
             categories.Id = Guid.NewGuid();
             var query = categoriesService.AddAsync(categories).Result;
-            TempData["Message"] = query.Message.ToString();
-            return Json(query);
+            if (query.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = query.Message.ToString();
+                return Json(query);
+            }
+            else
+                return Json(query);
         }
         public JsonResult CategoriesUpdate(Categories categories)
-        {           
+        {
             var query = categoriesService.UpdateAsync(categories).Result;
-            TempData["Message"] = query.Message.ToString();
-            return Json(query);
+            if (query.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = query.Message.ToString();
+                return Json(query);
+            }
+            else
+                return Json(query);
+
         }
     }
 }

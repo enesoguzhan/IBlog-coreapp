@@ -1,6 +1,8 @@
 ﻿using IBlog.Business.Abstract;
+using IBlog.Business.UserManager;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Blogs;
+using IBlog.Entities.DTO.UserManeger;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,19 +15,35 @@ namespace IBlog.UI.Areas.Panel.Controllers
         private readonly IBlogsService blogsService;
         private readonly IImagesService imagesService;
         private readonly ICategoriesService categoriesService;
-
-
-        public BlogsController(IBlogsService blogsService, IImagesService imagesService, ICategoriesService categoriesService)
+        private readonly IUserManager userManager;
+        public BlogsController(IBlogsService blogsService, IImagesService imagesService, ICategoriesService categoriesService, IUserManager userManager)
         {
             this.blogsService = blogsService;
             this.imagesService = imagesService;
             this.categoriesService = categoriesService;
+            this.userManager = userManager;
+
         }
 
         public IActionResult Index()
         {
-            ViewBag.Title = "Blog Listesi";
-            return View(blogsService.GetAllBlogsAsync().Result);
+            UserClaims userClaims = userManager.GetUserClaims();
+            if (userClaims.Role == "Yönetici")
+            {
+                ViewBag.Title = "Blog Listesi";
+                return View(blogsService.GetListBlog().Result);
+            }
+            else
+                return Redirect($"/panel/blogs/UserBlogsList/{userClaims.Id}");
+
+        }
+
+        [HttpGet]
+        [Route("/panel/blogs/UserBlogsList/{id:Guid}")]
+        public IActionResult UserBlogsList(Guid id)
+        {
+            ViewBag.Title = "Bloglarım";
+            return View(blogsService.GetListBlogByUser(id).Result);
         }
 
         [HttpGet]
@@ -60,7 +78,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
                 }
             }
 
-            return View();
+            return Redirect("/panel/blogs/Index");
         }
 
         [Route("/Panel/Blogs/Update/{id:Guid}")]
@@ -75,12 +93,24 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/blogs/Update/{id:Guid}")]
         public IActionResult Update(Guid id, BlogsUpdateDTO blogs)
         {
+            var userClaims = userManager.GetUserClaims();
             ViewBag.Title = "Blog Güncelle";
             ViewBag.Categories = categoriesService.GetAllCategoriesAsync().Result;
-            blogs.Id = id;               
-            ViewBag.Message = blogsService.UpdateAsync(blogs).Result;
-            return View(blogsService.GetBlog(id).Result);
+            blogs.Id = id;
+            var result = blogsService.UpdateAsync(blogs).Result;
+            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
+                if (userClaims.Role == "Yönetici")
+                    return Redirect("/panel/blogs/Index");
+                else
+                    return Redirect($"/panel/blogs/UserBlogsList/{userClaims.Id}");
+            }
+            else
+            {
+                ViewBag.Message = result.Message;
+                return View(blogsService.GetBlog(id).Result);
+            }
         }
-
     }
 }

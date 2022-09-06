@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBlog.DataAccess.Migrations
 {
     [DbContext(typeof(IBlogContext))]
-    [Migration("20220905170256_mig_1")]
+    [Migration("20220906051225_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("PublishDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 5, 20, 2, 56, 498, DateTimeKind.Local).AddTicks(5575));
+                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(1024));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -100,7 +100,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 5, 20, 2, 56, 499, DateTimeKind.Local).AddTicks(501));
+                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(6699));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -154,7 +154,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("InteractionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 5, 20, 2, 56, 499, DateTimeKind.Local).AddTicks(1219));
+                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(7686));
 
                     b.Property<string>("IpAddress")
                         .IsRequired()

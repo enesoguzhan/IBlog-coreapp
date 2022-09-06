@@ -55,5 +55,13 @@ namespace IBlog.UI.Areas.Panel.Controllers
             ViewBag.Message = usersService.UpdateAsync(id, users).Result;
             return View(usersService.GetUser(id).Result);
         }
+
+        [HttpGet]
+        [Route("/Panel/Users/UserList")]
+        public IActionResult UserList()
+        {
+            ViewBag.Title = "Kullanıcı Listesi";            
+            return View(usersService.GetUsersList().Result);
+        }
     }
 }

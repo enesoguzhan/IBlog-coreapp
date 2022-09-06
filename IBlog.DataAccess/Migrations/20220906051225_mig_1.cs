@@ -46,7 +46,7 @@ namespace IBlog.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Explanation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 5, 20, 2, 56, 498, DateTimeKind.Local).AddTicks(5575)),
+                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(1024)),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
@@ -75,7 +75,7 @@ namespace IBlog.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Commenter = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 5, 20, 2, 56, 499, DateTimeKind.Local).AddTicks(501)),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(6699)),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -116,7 +116,7 @@ namespace IBlog.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InteracitonType = table.Column<bool>(type: "bit", nullable: false),
-                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 5, 20, 2, 56, 499, DateTimeKind.Local).AddTicks(1219)),
+                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(7686)),
                     IpAddress = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },

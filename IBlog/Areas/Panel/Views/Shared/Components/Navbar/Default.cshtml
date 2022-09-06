@@ -13,9 +13,9 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                    <li><a href="/panel/users/Index/@ViewBag.UserInfo.Id">Profil Düzenle</a></li>            
+                    <li><a href="/panel/users/Index/@ViewBag.UserInfo.Id">Profil Düzenle</a></li>
                     <li class="divider"></li>
-                    <li><a href="login.html">Çıkış Yap</a></li>
+                    <li><a href="/panel/logout">Çıkış Yap</a></li>
                 </ul>
             </div>
             <div class="logo-element">
@@ -23,11 +23,21 @@
             </div>
         </li>
         <li>
-            <a href="/panel/categories/Index"><i class="fa fa-flask"></i> <span class="nav-label">Kategoriler</span></a>
+            <a href="/panel/users/UserList"><i class="fa fa-users"></i> <span class="nav-label">Kullanıcılar</span></a>
         </li>
         <li>
-            <a href="/panel/blogs/Index"><i class="fa fa-flask"></i> <span class="nav-label">Bloglar</span></a>
+            <a href="/panel/categories/Index"><i class="fa fa-list"></i> <span class="nav-label">Kategoriler</span></a>
         </li>
+        <li>
+            @if (ViewBag.UserInfo.Role == "Yönetici")
+            {
+                <a href="/panel/blogs/Index"><i class="fa fa-book"></i> <span class="nav-label">Bloglar</span></a>
+            }
+            else
+            {
+                <a href="/panel/blogs/UserBlogsList/@ViewBag.UserInfo.Id"><i class="fa fa-book"></i> <span class="nav-label">Bloglarım</span></a>
 
+            }
+        </li>
     </ul>
 </div>

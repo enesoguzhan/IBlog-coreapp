@@ -26,7 +26,7 @@
                     <h5>Blog Oluştur</h5>
                 </div>
                 <div class="ibox-content">
-                    <form action="/panel/blogs/Update/@Model.Id" method="post"  class="form-horizontal"  enctype="multipart/form-data">
+                    <form action="/panel/blogs/Update/@Model.Id" method="post" class="form-horizontal" enctype="multipart/form-data">
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Başlık :</label>
                             <div class="col-lg-8">
@@ -61,18 +61,17 @@
                             <div class="col-lg-8">
                                 <input name="images" type="file" class="form-control">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Yayınlanma Tarihi :</label>
-                            <div class="col-lg-8">
-                                <input name="PublishDateTime" type="datetime" class="form-control" value="@Model.PublishDateTime" >
-                            </div>
-                        </div>
+                        </div>                   
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-8">
-                                <div class="i-checks"><label> <input name="Status" id="cbActive" type="checkbox" value="@Model.Status.ToString()" /><i></i> Aktif </label></div>
+                                <div class="i-checks">
+                                    <label>
+                                        <input name="Status" id="cbActive" type="checkbox" value="@Model.Status.ToString()" @if (Model.Status) { @Html.Raw("checked")  } /><i></i> Aktif
+                                    </label>
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="col-lg-offset-2 col-lg-10">
                                 <button class="btn btn-success" type="submit">Kaydet</button>
@@ -85,14 +84,10 @@
     </div>
 </div>
 
-<script>
-    var check = '@Model.Status';
+<script>   
     $(document).ready(function () {
         $('#slCategory').select2({ placeholder: 'Kategori Seçiniz' });
         $('#slCategory').val('@Model.Categories.Id').change();
-        if (check === "True") {  
-            $('#cbActive').attr('checked','checked');
-        }
         $('#cbActive').click(function () {
             let val = $('#cbActive').is(":checked")
             $('#cbActive').val(val);

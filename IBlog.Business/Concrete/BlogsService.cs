@@ -47,10 +47,14 @@ namespace IBlog.Business.Concrete
         {
             return await unitOfWork.blogsRepo.AsyncGetAll(null, s => s.Categories, x => x.User, d => d.Images);
         }
+        public async Task<IList<Blogs>> GetAllBlogsActiveAsync()
+        {
+            return await unitOfWork.blogsRepo.AsyncGetAll(s => s.Status == true, s => s.Categories, x => x.User, d => d.Images);
+        }
 
         public async Task<IList<Blogs>> GetAllBlogsGetByCategoriesAsync(Guid categoriesId)
         {
-            return await unitOfWork.blogsRepo.AsyncGetAll(s => s.CategoryId == categoriesId,s=>s.Images,s=>s.Categories,s=>s.User);
+            return await unitOfWork.blogsRepo.AsyncGetAll(s => s.CategoryId == categoriesId && s.Status == true, s => s.Images, s => s.Categories, s => s.User);
         }
 
         public async Task<Blogs> GetBlog(Guid id)
@@ -65,15 +69,34 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<LastAddedBlogsDTO>> GetLastAddedBlogs()
         {
-            IList<Blogs> data = unitOfWork.blogsRepo.AsyncGetAll(null,s=>s.Images).Result.OrderByDescending(s => s.PublishDateTime).Take(3).ToList();
+            IList<Blogs> data = unitOfWork.blogsRepo.AsyncGetAll(s => s.Status == true, s => s.Images).Result.OrderByDescending(s => s.PublishDateTime).Take(3).ToList();
             return await Task.Run(() => mapper.Map<IList<LastAddedBlogsDTO>>(data));
         }
 
         public async Task<IResult> UpdateAsync(BlogsUpdateDTO data)
         {
-            var das = mapper.Map<Blogs>(data);
-            return await unitOfWork.blogsRepo.AsyncUpdate(mapper.Map<Blogs>(data)).ContinueWith(s => unitOfWork.SaveChanges()).Result;
+            var updateQuery = unitOfWork.blogsRepo.AsyncFirst(s => s.Id == data.Id, s => s.Images, s => s.User).Result;
+            if (updateQuery != null)
+            {
+                updateQuery.Name = data.Name;
+                updateQuery.Explanation = data.Explanation;
+                updateQuery.CategoryId = data.CategoryId;
+                updateQuery.Status = data.Status;
+            }
+            return await unitOfWork.blogsRepo.AsyncUpdate(updateQuery).ContinueWith(s => unitOfWork.SaveChanges()).Result;
 
+        }
+
+        public async Task<IList<BlogsListDTO>> GetListBlog()
+        {
+            var data = unitOfWork.blogsRepo.AsyncGetAll(null, s => s.Categories, s => s.User).Result;
+            return await Task.Run(() => mapper.Map<IList<BlogsListDTO>>(data));
+        }
+
+        public async Task<IList<BlogsListDTO>> GetListBlogByUser(Guid id)
+        {
+            var data = unitOfWork.blogsRepo.AsyncGetAll(s => s.UserId == id, s => s.Categories).Result;
+            return await Task.Run(() => mapper.Map<IList<BlogsListDTO>>(data));
         }
     }
 }

@@ -43,7 +43,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<AuthorsBlogsDTO> GetAuthorsBlogs(Guid userId)
         {
-            var data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
+            Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
 
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
@@ -51,6 +51,12 @@ namespace IBlog.Business.Concrete
         public async Task<Users> GetUser(Guid id)
         {
             return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id);
+        }
+
+        public async Task<IList<UserListDTO>> GetUsersList()
+        {
+            var data = unitOfWork.usersRepo.AsyncGetAll(null,s=>s.Blogs).Result;
+            return await Task.Run(() => mapper.Map<IList<UserListDTO>>(data));
         }
 
         public async Task<Users> LoginAsync(string Email, string Password)

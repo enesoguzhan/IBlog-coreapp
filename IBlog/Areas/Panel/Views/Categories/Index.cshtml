@@ -68,11 +68,14 @@
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" id="modalFooter">
             </div>
         </div>
     </div>
 </div>
+
+
+
 @if (TempData["Message"] != null)
 {
     <script>
@@ -85,13 +88,13 @@
 <script>
 
     function InsertModal() {
-        $('.modal-footer').html(` <button type="button" onclick="InsertCategories()" class="btn btn-success btn-outline" data-disable="true">Kaydet</button>
+        $('#modalFooter').html(` <button type="button" onclick="InsertCategories()" class="btn btn-success btn-outline" data-disable="true">Kaydet</button>
                                                                         <button type="button" class="btn btn-danger btn-outline" data-dismiss="modal">Kapat</button>`);
         $('#modalInsertAndUpdate').modal();
     };
     function UpdateModal(Id, name) {
         $('#categoryNameTxt').val(name);
-        $('.modal-footer').html(` <button type="button" onclick="UpdateCategories('${Id}')" class="btn btn-success btn-outline" data-disable="true">Güncelle</button>
+        $('#modalFooter').html(` <button type="button" onclick="UpdateCategories('${Id}')" class="btn btn-success btn-outline" data-disable="true">Güncelle</button>
                                                                             <button type="button" class="btn btn-danger btn-outline" data-dismiss="modal">Kapat</button>`);
         $('#modalInsertAndUpdate').modal();
     };
@@ -111,11 +114,13 @@
                     location.reload();
                 }
                 else {
-                    console.log(response.message);
+                    $('#modalErrorMessage').html(response.message);
+                    $('#modalDanger').modal();
                 }
             },
             error: function (response) {
-                alert(response.message);
+                $('#modalErrorMessage').html(response.message);
+                $('#modalDanger').modal();
             }
         });
     }
@@ -133,15 +138,17 @@
             DataType: "json",
             success: function (response) {
                 if (response.statusCode == 200) {
-                   
+
                     location.reload();
                 }
                 else {
-                    console.log(response.message);
+                    $('#modalErrorMessage').html(response.message);
+                    $('#modalDanger').modal();
                 }
             },
             error: function (response) {
-                alert(response.message);
+                $('#modalErrorMessage').html(response.message);
+                $('#modalDanger').modal();
             }
         });
     }

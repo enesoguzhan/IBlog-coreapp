@@ -23,18 +23,18 @@
     <script src="/static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <!-- Custom and plugin javascript -->
     <script src="/static/js/inspinia.js"></script>
-  @*  <script src="/static/js/plugins/pace/pace.min.js"></script>*@
+    @*  <script src="/static/js/plugins/pace/pace.min.js"></script>*@
     <!-- jQuery UI -->
     <script src="/static/js/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Toastr -->
     <script src="/static/js/plugins/toastr/toastr.min.js"></script>
-   @* <script src="~/static/js/common.js"></script>*@
+    @* <script src="~/static/js/common.js"></script>*@
 </head>
 
 <body>
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
-           @await Component.InvokeAsync("Navbar")
+            @await Component.InvokeAsync("Navbar")
         </nav>
 
         <div id="page-wrapper" class="gray-bg dashbard-1">
@@ -90,18 +90,45 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="login.html">
+                            <a href="/panel/Logout">
                                 <i class="fa fa-sign-out"></i> Çıkış Yap
                             </a>
                         </li>
                     </ul>
 
                 </nav>
-            </div> 
+            </div>
             <div>
                 @RenderBody()
             </div>
         </div>
     </div>
+
+    <div class="modal fade text-danger" id="modalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title txt-color-red" id="myModalLabel"><i class="fa fa-fw fa-exclamation-circle"></i>Hata</h4>
+                </div>
+                <div class="modal-body" id="modalErrorMessage">
+                </div>
+                <div class="modal-footer" id="modalDangerFooter">
+                    <button id="dangerModalButton" type="button" class="btn btn-default" data-dismiss="modal">
+                        Kapat
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+@if (TempData["Message"] != null)
+{
+    <script>
+        let message = '@TempData["Message"]'
+        toastr.success(message);
+    </script>
+}

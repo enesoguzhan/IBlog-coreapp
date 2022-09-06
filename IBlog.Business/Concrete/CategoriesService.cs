@@ -21,6 +21,14 @@ namespace IBlog.Business.Concrete
 
         public async Task<IResult> AddAsync(Categories data)
         {
+            var dataList = unitOfWork.categoriesRepo.AsyncGetAll().Result;
+            foreach (var item in dataList)
+            {
+                if (item.Name.ToLower() == data.Name.ToLower())
+                {
+                    return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Aynı İsimde Kategori Olamaz");
+                }
+            }
             return await unitOfWork.categoriesRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
 
@@ -36,18 +44,26 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<CategoriesListCountDTO>> GetCategoriesCount()
         {
-            var data = unitOfWork.categoriesRepo.AsyncGetAll(s=>s.Blogs.Count > 0,s=>s.Blogs).Result;
-            
+            var data = unitOfWork.categoriesRepo.AsyncGetAll(s => s.Blogs.Count > 0, s => s.Blogs.Where(s => s.Status == true)).Result;
+
             return await Task.Run(() => mapper.Map<IList<CategoriesListCountDTO>>(data));
         }
 
         public async Task<Categories> GetCategory(Guid id)
-        {            
+        {
             return await unitOfWork.categoriesRepo.AsyncFirst(s => s.Id == id);
         }
 
         public async Task<IResult> UpdateAsync(Categories data)
         {
+            var dataList = unitOfWork.categoriesRepo.AsyncGetAll().Result;
+            foreach (var item in dataList)
+            {
+                if (item.Name.ToLower() == data.Name.ToLower())
+                {
+                    return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Aynı İsimde Kategori Olamaz");
+                }
+            }
             return await unitOfWork.categoriesRepo.AsyncUpdate(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
 
         }

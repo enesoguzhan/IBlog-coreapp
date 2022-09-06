@@ -29,7 +29,7 @@ namespace IBlog.UI.Controllers
             {
                 var claims = new List<Claim>();
                 claims.Add(new Claim("Id", user.Id.ToString()));
-                claims.Add(new Claim("NameSurnameFirstChar", user.Name.Substring(0,1) + user.Surname.Substring(0,1)));
+                claims.Add(new Claim("NameSurnameFirstChar", user.Name.Substring(0, 1) + user.Surname.Substring(0, 1)));
                 claims.Add(new Claim("AvatarImage", user.AvatarImage ?? ""));
                 claims.Add(new Claim(ClaimTypes.Name, user.Name + " " + user.Surname));
                 if (user.RoleType == 1)
@@ -65,7 +65,10 @@ namespace IBlog.UI.Controllers
         {
             var result = usersService.AddAsync(customer).Result;
             if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
                 return Redirect("/login/Index");
+            }
             else
             {
                 ViewBag.Message = result.Message;
