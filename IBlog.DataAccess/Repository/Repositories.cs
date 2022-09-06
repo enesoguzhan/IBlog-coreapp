@@ -1,4 +1,7 @@
 ﻿using IBlog.Core.Abstract;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System;
 using System.Linq.Expressions;
 
 namespace IBlog.DataAccess.Repository
@@ -58,20 +61,16 @@ namespace IBlog.DataAccess.Repository
             await Task.Run(() => context.Update(entity));
         }
 
-        //public async Task<TEntity> IncludeMultiple(Expression<Func<TEntity, bool>> where = null, params string[] includes)
-        //{
-        //    IQueryable<TEntity> query = null;
-        //    if (where != null)
-        //        query = context.Set<TEntity>().Where(where);
-        //    else
-        //        query = context.Set<TEntity>();
-        //    if (includes != null)
-        //    {
-        //        query = includes.Aggregate(query,
-        //            (current, inc) => current.Include(inc));
-        //    }
+        public async Task<TEntity> IncludeMultiple(Expression<Func<TEntity, bool>> where = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null)
+        {
+            IQueryable<TEntity> query = context.Set<TEntity>().Where(where);
+            if (include != null)
+            {
+                query = include(query);
+            }
 
-        //    return await query.FirstOrDefaultAsync();
-        //}
+            return await query.FirstOrDefaultAsync();
+
+        }
     }
 }

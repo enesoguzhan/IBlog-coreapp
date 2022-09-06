@@ -4,12 +4,7 @@ using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Users;
-using Org.BouncyCastle.Math.EC.Rfc7748;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace IBlog.Business.Concrete
 {
@@ -43,8 +38,11 @@ namespace IBlog.Business.Concrete
 
         public async Task<AuthorsBlogsDTO> GetAuthorsBlogs(Guid userId)
         {
-            Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
-
+           // Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
+            Users data = unitOfWork.usersRepo.IncludeMultiple(s => s.Id == userId, s => s.Include(s => s.Blogs)
+            .ThenInclude(s => s.Images).
+            Include(s => s.Blogs).
+            ThenInclude(s => s.Categories)).Result;
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
 
@@ -55,7 +53,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<UserListDTO>> GetUsersList()
         {
-            var data = unitOfWork.usersRepo.AsyncGetAll(null,s=>s.Blogs).Result;
+            var data = unitOfWork.usersRepo.AsyncGetAll(null, s => s.Blogs).Result;
             return await Task.Run(() => mapper.Map<IList<UserListDTO>>(data));
         }
 
