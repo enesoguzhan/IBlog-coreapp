@@ -64,7 +64,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<Blogs> GetBlogAllInclude(Guid id)
         {
-            return await unitOfWork.blogsRepo.AsyncFirst(s => s.Id == id, a => a.Images, b => b.User, d => d.Categories);
+            return await unitOfWork.blogsRepo.AsyncFirst(s => s.Id == id, a => a.Images, b => b.User, d => d.Categories,c=>c.Comments);
         }
 
         public async Task<IList<LastAddedBlogsDTO>> GetLastAddedBlogs()

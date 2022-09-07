@@ -25,6 +25,7 @@ namespace IBlog.DataAccess.UnitOfWorks
         private InteractionsRepo interactions;
         private UsersRepo users;
         private ImagesRepo images;
+        private SocialLinksRepo socialLinks;
 
         public IBlogsRepo blogsRepo => blogs ?? new BlogsRepo(context);
 
@@ -37,6 +38,8 @@ namespace IBlog.DataAccess.UnitOfWorks
         public IUsersRepo usersRepo => users ?? new UsersRepo(context);
 
         public IImagesRepo imagesRepo => images ?? new ImagesRepo(context);
+
+        public ISocialLinksRepo socialLinksRepo => socialLinks ?? new SocialLinksRepo(context);
 
         public async Task<IResult> SaveChanges()
         {

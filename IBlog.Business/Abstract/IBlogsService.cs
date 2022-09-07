@@ -1,8 +1,6 @@
-﻿using IBlog.Core.Abstract;
-using IBlog.Core.Results;
+﻿using IBlog.Core.Results;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Blogs;
-using System.Linq.Expressions;
 
 namespace IBlog.Business.Abstract
 {

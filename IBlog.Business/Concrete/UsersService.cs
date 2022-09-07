@@ -38,7 +38,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<AuthorsBlogsDTO> GetAuthorsBlogs(Guid userId)
         {
-           // Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
+            // Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
             Users data = unitOfWork.usersRepo.IncludeMultiple(s => s.Id == userId, s => s.Include(s => s.Blogs)
             .ThenInclude(s => s.Images).
             Include(s => s.Blogs).
@@ -46,9 +46,21 @@ namespace IBlog.Business.Concrete
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
 
+        public Task<IList<AuthorsCartDTO>> GetAuthorsCart()
+        {
+            var data = unitOfWork.usersRepo.AsyncGetAll().Result;
+            return Task.Run(() => mapper.Map<IList<AuthorsCartDTO>>(data));
+        }
+
         public async Task<Users> GetUser(Guid id)
         {
             return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id);
+        }
+
+        public Task<PasswordUpdateDTO> GetUserPassword(Guid userId)
+        {
+            Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId).Result;
+            return Task.Run(() => mapper.Map<PasswordUpdateDTO>(data));
         }
 
         public async Task<IList<UserListDTO>> GetUsersList()
@@ -73,14 +85,26 @@ namespace IBlog.Business.Concrete
             if (user != null)
             {
                 user.Name = data.Name;
-                user.Surname = data.Surname;
-                user.Email = data.Email;
+                user.Surname = data.Surname;       
                 user.Explanation = data.Explanation;
-                user.Password = data.Password;
                 user.AvatarImage = data.AvatarImage ?? user.AvatarImage;
             }
             return await unitOfWork.usersRepo.AsyncUpdate(user).ContinueWith(s => unitOfWork.SaveChanges()).Result;
 
+        }
+
+        public async Task<IResult> UpdateUserPassword(PasswordUpdateDTO passwordUpdateDTO)
+        {
+            Users users = unitOfWork.usersRepo.AsyncFirst(s => s.Id == passwordUpdateDTO.Id).Result;
+            if (users.Password != passwordUpdateDTO.OldPassword)
+            {
+                return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Eski şifre uyuşmuyor");
+            }
+            if (users != null)
+            {
+                users.Password = passwordUpdateDTO.Password;
+            }
+            return await unitOfWork.usersRepo.AsyncUpdate(users).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
     }
 }

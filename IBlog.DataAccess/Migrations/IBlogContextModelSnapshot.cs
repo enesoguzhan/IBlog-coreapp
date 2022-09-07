@@ -43,7 +43,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("PublishDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(1024));
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(1654));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -90,29 +90,24 @@ namespace IBlog.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Commenter")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(6699));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(6419));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BlogId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments", (string)null);
                 });
@@ -152,7 +147,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("InteractionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(7686));
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(7971));
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
@@ -164,6 +159,36 @@ namespace IBlog.DataAccess.Migrations
                     b.HasIndex("BlogId");
 
                     b.ToTable("Interactions", (string)null);
+                });
+
+            modelBuilder.Entity("IBlog.Entities.SocialLinks", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Facebook")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Github")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Linkedin")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SocialLinks");
                 });
 
             modelBuilder.Entity("IBlog.Entities.Users", b =>
@@ -196,12 +221,19 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<int>("RoleType")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("SocialLinksId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SocialLinksId")
+                        .IsUnique()
+                        .HasFilter("[SocialLinksId] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -233,7 +265,15 @@ namespace IBlog.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("IBlog.Entities.Users", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Blog");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IBlog.Entities.Images", b =>
@@ -258,6 +298,15 @@ namespace IBlog.DataAccess.Migrations
                     b.Navigation("Blog");
                 });
 
+            modelBuilder.Entity("IBlog.Entities.Users", b =>
+                {
+                    b.HasOne("IBlog.Entities.SocialLinks", "SocialLinks")
+                        .WithOne("User")
+                        .HasForeignKey("IBlog.Entities.Users", "SocialLinksId");
+
+                    b.Navigation("SocialLinks");
+                });
+
             modelBuilder.Entity("IBlog.Entities.Blogs", b =>
                 {
                     b.Navigation("Comments");
@@ -272,9 +321,17 @@ namespace IBlog.DataAccess.Migrations
                     b.Navigation("Blogs");
                 });
 
+            modelBuilder.Entity("IBlog.Entities.SocialLinks", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("IBlog.Entities.Users", b =>
                 {
                     b.Navigation("Blogs");
+
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

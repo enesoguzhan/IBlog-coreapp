@@ -5,7 +5,6 @@ using IBlog.Business.EmailService;
 using IBlog.Business.UserManager;
 using IBlog.DataAccess;
 using IBlog.DataAccess.UnitOfWorks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +17,8 @@ builder.Services.AddScoped<IImagesService, ImagesService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ISocialLinksService, SocialLinksService>();
+builder.Services.AddScoped<ICommentsService, CommentsService>();
 
 builder.Services.AddAutoMapper(typeof(AutoProfile));
 builder.Services.AddControllersWithViews();

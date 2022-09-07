@@ -1,0 +1,43 @@
+﻿@model IBlog.Entities.DTO.UserManeger.UserClaims
+<header class="sticky-top bg-white border-bottom border-default">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-white">
+            <a class="navbar-brand" href="/home/Index">
+                <img class="img-fluid" width="150px" src="/ui/images/logo.png" alt="IBlog">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+                <i class="ti-menu"></i>
+            </button>
+
+            <div class="collapse navbar-collapse text-center" id="navigation">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/Index">Ana Sayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">Hakkımda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/authors/authorcart">Yazarlar</a>
+                    </li>
+                    @if (Model.NameSurname != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/panel/home">Panele Git</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        @if (Model.NameSurname == null)
+                        {
+                            <a class="nav-link" href="/panel/home">Oturum Aç</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link" href="/panel/logout">@Model.NameSurname - Çıkış Yap</a>
+                        }
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>

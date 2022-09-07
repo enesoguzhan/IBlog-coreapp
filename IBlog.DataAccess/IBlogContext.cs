@@ -11,6 +11,7 @@ namespace IBlog.DataAccess
         public DbSet<Interactions> Interactions { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Images> Images { get; set; }
+        public DbSet<SocialLinks> SocialLinks { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +28,7 @@ namespace IBlog.DataAccess
             modelBuilder.ApplyConfiguration(new UsersMap());
             modelBuilder.ApplyConfiguration(new CategoriesMap());
             modelBuilder.ApplyConfiguration(new ImagesMap());
+            modelBuilder.ApplyConfiguration(new SocialLinksMap());
         }
     }
 }

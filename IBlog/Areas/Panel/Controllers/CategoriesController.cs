@@ -22,7 +22,13 @@ namespace IBlog.UI.Areas.Panel.Controllers
             return View(data);
         }
 
-
+        [HttpGet]
+        [Route("/panel/categories/delete/{id:Guid}")]
+        public IActionResult Delete(Guid id)
+        {
+           TempData["Message"] = categoriesService.DeleteAsync(id).Result.Message;
+            return Redirect("/panel/categories");
+        }
       
     }
 }

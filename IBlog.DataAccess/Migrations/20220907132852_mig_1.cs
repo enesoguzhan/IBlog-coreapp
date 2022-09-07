@@ -22,6 +22,22 @@ namespace IBlog.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialLinks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Facebook = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Github = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Linkedin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialLinks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -32,11 +48,17 @@ namespace IBlog.DataAccess.Migrations
                     Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Explanation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AvatarImage = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    RoleType = table.Column<int>(type: "int", nullable: false)
+                    RoleType = table.Column<int>(type: "int", nullable: false),
+                    SocialLinksId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_SocialLinks_SocialLinksId",
+                        column: x => x.SocialLinksId,
+                        principalTable: "SocialLinks",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +68,7 @@ namespace IBlog.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Explanation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(1024)),
+                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(1654)),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
@@ -73,12 +95,11 @@ namespace IBlog.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Commenter = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(6699)),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(6419)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,6 +110,11 @@ namespace IBlog.DataAccess.Migrations
                         principalTable: "Blogs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +142,7 @@ namespace IBlog.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InteracitonType = table.Column<bool>(type: "bit", nullable: false),
-                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 6, 8, 12, 25, 646, DateTimeKind.Local).AddTicks(7686)),
+                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(7971)),
                     IpAddress = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -147,6 +173,11 @@ namespace IBlog.DataAccess.Migrations
                 column: "BlogId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Images_BlogId",
                 table: "Images",
                 column: "BlogId");
@@ -155,6 +186,13 @@ namespace IBlog.DataAccess.Migrations
                 name: "IX_Interactions_BlogId",
                 table: "Interactions",
                 column: "BlogId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_SocialLinksId",
+                table: "Users",
+                column: "SocialLinksId",
+                unique: true,
+                filter: "[SocialLinksId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -176,6 +214,9 @@ namespace IBlog.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "SocialLinks");
         }
     }
 }

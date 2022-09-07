@@ -1,32 +1,100 @@
-﻿
-    <div class="container">
-        <article class="row mb-4">
-            <div class="col-lg-10 mx-auto mb-4">
-                <h1 class="h2 mb-3">@Model.Name</h1>
-                <ul class="list-inline post-meta mb-3">
-                    <li class="list-inline-item">
-                        <i class="ti-user mr-2"></i><a href="author.html">
-                           @Model.User.Name @Model.User.Surname
+﻿@model IBlog.Entities.Blogs
+<div class="container">
+    <article class="row mb-4">
+        <div class="col-lg-10 mx-auto mb-4">
+            <h1 class="h2 mb-3">@Model.Name</h1>
+            <ul class="list-inline post-meta mb-3">
+                <li class="list-inline-item">
+                    <i class="ti-user mr-2"></i><a href="author.html">
+                        @Model.User.Name @Model.User.Surname
+                    </a>
+                </li>
+                <li class="list-inline-item">Yayınlanma Tarihi : @Model.PublishDateTime</li>
+                <li class="list-inline-item">
+                    Kategori : <a href="#!" class="ml-1">@Model.Categories.Name </a>
+                </li>
+                <li class="list-inline-item">
+                    <i class="ti-comments mr-2"></i>
+                    Yorum  : @Model.Comments.Count                   
+                </li>
+            </ul>
+        </div>
+        <div class="col-9 mb-3 container">
+            <div class="post-slider">
+                @foreach (var images in Model.Images)
+                {
+                    <img style="width:200px;height:400px;" src="/images/@images.Name" class="img-fluid" alt="post-thumb">
+                }
+            </div>
+        </div>
+        <div class="col-lg-10 mx-auto">
+            <div class="content">
+                <p>@Model.Explanation</p>
+            </div>
+        </div>
+    </article>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Yorumlar:</h2>
+        @if (Model.Comments != null && Model.Comments.Count > 0)
+        {
+            @foreach (var comments in Model.Comments)
+            {
+                <div class="social-feed-box table-bordered" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+                    <div class="social-avatar">
+                        <a href="" class="pull-left">
+                            <img alt="image" src="/images/@comments.User.AvatarImage">
                         </a>
-                    </li>
-                    <li class="list-inline-item">Yayınlanma Tarihi : @Model.PublishDateTime</li>
-                    <li class="list-inline-item">
-                        Kategori : <a href="#!" class="ml-1">@Model.Categories.Name </a>
-                    </li>                  
-                </ul>
-            </div>
-            <div class="col-9 mb-3 container">
-                <div class="post-slider">
-                    @foreach (var images in Model.Images)
-                    {
-                        <img style="width:200px;height:400px;" src="/images/@images.Name" class="img-fluid" alt="post-thumb">
-                    }
+                        <div class="media-body">
+                            <a href="#">
+                                @comments.User.Name @comments.User.Surname
+                            </a>
+                            <small class="text-muted">@comments.CreationDate</small>
+                        </div>
+                    </div>
+                    <div class="social-body">
+                        <p>
+                            @comments.Comment
+                        </p>
+                    </div>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+                <div class="social-body text-center">
+                    <h5>İlk Yorumu Yap</h5>
                 </div>
             </div>
-            <div class="col-lg-10 mx-auto">
-                <div class="content">
-                    <p>@Model.Explanation</p>
+        }
+        @if (ViewBag.UserInfo.Id != null)
+        {
+            <form method="post" action="/Comments/InsertComment">
+                <input name="BlogId" value="@Model.Id" hidden />
+                <div class="form-group">
+                    <h4>Yorum Yap:</h4>
+                    <div>
+                        <textarea name="Comment" style="width:1137px;height:200px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <div class="col-lg-offset-2 col-lg-10 pull-right">
+                        <button class="btn btn-success pull-right" type="submit">Gönder</button>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+                <div class="social-body text-center">
+                    <h4>Yorum Yapmak İçin Giriş Yapınız</h4>
                 </div>
             </div>
-        </article>
+        }
     </div>
+</div>

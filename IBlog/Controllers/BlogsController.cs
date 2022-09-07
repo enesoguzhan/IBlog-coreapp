@@ -1,4 +1,5 @@
 ﻿using IBlog.Business.Abstract;
+using IBlog.Business.UserManager;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBlog.UI.Controllers
@@ -6,10 +7,12 @@ namespace IBlog.UI.Controllers
     public class BlogsController : Controller
     {
         private readonly IBlogsService blogsService;
+        private readonly IUserManager _userManager;
 
-        public BlogsController(IBlogsService blogsService)
+        public BlogsController(IBlogsService blogsService, IUserManager userManager)
         {
             this.blogsService = blogsService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -19,6 +22,7 @@ namespace IBlog.UI.Controllers
         [Route("/blogs/detail/{id}")]
         public IActionResult Detail(Guid id)
         {
+            ViewBag.UserInfo = _userManager.GetUserClaims();
             ViewBag.Title = "Blog Detay";
             var data = blogsService.GetBlogAllInclude(id).Result;
             return View(data);

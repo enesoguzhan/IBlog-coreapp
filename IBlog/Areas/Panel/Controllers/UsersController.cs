@@ -1,6 +1,7 @@
 ﻿using IBlog.Business.Abstract;
 using IBlog.Business.UserManager;
 using IBlog.Entities;
+using IBlog.Entities.DTO.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -40,10 +41,13 @@ namespace IBlog.UI.Areas.Panel.Controllers
                 if (imageName == "0")
                 {
                     ViewBag.Message = "Ekleme Başarısız, Lütfen Jpeg veya Jpg uzantılı resim seçiniz";
+                    return View(usersService.GetUser(id).Result);
+
                 }
                 else if (imageName == "1")
                 {
                     ViewBag.Message = "Ekleme Başarısız, Lütfen resim seçiniz";
+                    return View(usersService.GetUser(id).Result);
                 }
                 else if (!string.IsNullOrEmpty(imageName))
                 {
@@ -52,16 +56,49 @@ namespace IBlog.UI.Areas.Panel.Controllers
                 }
             }
 
-            ViewBag.Message = usersService.UpdateAsync(id, users).Result;
-            return View(usersService.GetUser(id).Result);
+            var result = usersService.UpdateAsync(id, users).Result;
+            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
+                return View(usersService.GetUser(id).Result);
+            }
+            else
+            {
+                ViewBag.Message = result.Message;
+                return View(usersService.GetUser(id).Result);
+
+            }
         }
 
         [HttpGet]
         [Route("/Panel/Users/UserList")]
         public IActionResult UserList()
         {
-            ViewBag.Title = "Kullanıcı Listesi";            
+            ViewBag.Title = "Kullanıcı Listesi";
             return View(usersService.GetUsersList().Result);
+        }
+
+        [HttpGet]
+        [Route("/panel/users/passwordchanged/{Id:Guid}")]
+        public IActionResult PasswordChanged(Guid Id)
+        {
+            return View(usersService.GetUserPassword(Id).Result);
+        }
+        [HttpPost]
+        [Route("/panel/users/passwordchanged/{Id:Guid}")]
+        public IActionResult PasswordChanged(Guid Id, PasswordUpdateDTO passwordUpdateDTO)
+        {
+            var result = usersService.UpdateUserPassword(passwordUpdateDTO).Result;
+            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
+                return Redirect($"/Panel/Users/Index/{Id}");
+            }
+            else
+            {
+                ViewBag.Message = result.Message;
+                return View(usersService.GetUserPassword(Id).Result);
+            }
         }
     }
 }

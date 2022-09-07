@@ -21,7 +21,12 @@ namespace IBlog.UI.Controllers
             return View(data);
         }
 
-
+        [HttpGet]
+        [Route("/authors/AuthorCart")]
+        public IActionResult AuthorCart()
+        {
+            return View(_usersService.GetAuthorsCart().Result);
+        }
     }
 
 }
