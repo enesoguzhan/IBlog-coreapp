@@ -1,6 +1,4 @@
-﻿using IBlog.Core.Abstract;
-
-namespace IBlog.Entities
+﻿namespace IBlog.Entities
 {
     public class Users : IEntity
     {

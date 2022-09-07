@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBlog.Entities.DTO.Email
+﻿namespace IBlog.Entities.DTO.Email
 {
-    public class EmailDTO
+    public class EmailDTO :IDTO
     {
         public string To { get; set; }
         public string Subject { get; set; } = string.Empty;

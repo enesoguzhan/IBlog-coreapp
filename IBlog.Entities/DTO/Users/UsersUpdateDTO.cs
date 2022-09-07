@@ -1,6 +1,4 @@
-﻿using IBlog.Core.Abstract;
-
-namespace IBlog.Entities.DTO.Users
+﻿namespace IBlog.Entities.DTO.Users
 {
     public class UsersUpdateDTO : IDTO
     {

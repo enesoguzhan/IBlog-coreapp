@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IBlog.Entities.DTO.UserManeger
+﻿namespace IBlog.Entities.DTO.UserManeger
 {
-    public class UserClaims
+    public class UserClaims :IDTO
     {
         public string Id { get; set; }
         public string NameSurname { get; set; }

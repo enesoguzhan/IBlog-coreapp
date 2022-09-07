@@ -1,6 +1,6 @@
 ﻿namespace IBlog.Entities.DTO.Users
 {
-    public class UserListDTO
+    public class UserListDTO :IDTO
     {
         public Guid Id { get; set; }
         public string NameSurname { get; set; }

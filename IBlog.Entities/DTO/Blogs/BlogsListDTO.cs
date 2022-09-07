@@ -1,6 +1,4 @@
-﻿using IBlog.Core.Abstract;
-
-namespace IBlog.Entities.DTO.Blogs
+﻿namespace IBlog.Entities.DTO.Blogs
 {
     public class BlogsListDTO : IDTO
     {
