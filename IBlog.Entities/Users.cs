@@ -10,8 +10,7 @@
         public string Explanation { get; set; }
         public string AvatarImage { get; set; }
         public int RoleType { get; set; }
-        public List<Blogs> Blogs { get; set; }
-        public Guid? SocialLinksId { get; set; }
+        public List<Blogs> Blogs { get; set; }  
         public SocialLinks SocialLinks { get; set; }
         public List<Comments> Comments { get; set; }
     }

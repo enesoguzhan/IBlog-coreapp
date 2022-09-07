@@ -6,6 +6,7 @@ using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Blogs;
 using IBlog.Entities.DTO.UserManeger;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,11 @@ namespace IBlog.Business.Concrete
 
         public async Task<Blogs> GetBlogAllInclude(Guid id)
         {
-            return await unitOfWork.blogsRepo.AsyncFirst(s => s.Id == id, a => a.Images, b => b.User, d => d.Categories,c=>c.Comments);
+            return await unitOfWork.blogsRepo.IncludeMultiple(s => s.Id == id, s => s.Include(s => s.Images)
+            .Include(s => s.User)
+            .Include(s => s.Categories)
+            .Include(s => s.Comments).ThenInclude(s => s.User));
+
         }
 
         public async Task<IList<LastAddedBlogsDTO>> GetLastAddedBlogs()

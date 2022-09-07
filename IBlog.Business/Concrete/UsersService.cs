@@ -54,7 +54,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<Users> GetUser(Guid id)
         {
-            return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id);
+            return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id,s=>s.SocialLinks);
         }
 
         public Task<PasswordUpdateDTO> GetUserPassword(Guid userId)

@@ -25,6 +25,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         public IActionResult Index(Guid id)
         {
             ViewBag.Title = "Profil Güncelle";
+            var data = usersService.GetUser(id).Result;
             return View(usersService.GetUser(id).Result);
         }
 
@@ -84,6 +85,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         {
             return View(usersService.GetUserPassword(Id).Result);
         }
+
         [HttpPost]
         [Route("/panel/users/passwordchanged/{Id:Guid}")]
         public IActionResult PasswordChanged(Guid Id, PasswordUpdateDTO passwordUpdateDTO)
@@ -99,6 +101,6 @@ namespace IBlog.UI.Areas.Panel.Controllers
                 ViewBag.Message = result.Message;
                 return View(usersService.GetUserPassword(Id).Result);
             }
-        }
+        }       
     }
 }

@@ -31,6 +31,21 @@
                             </div>
                         }
                         <div class="form-group">
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <a href="/panel/users/passwordchanged/@Model.Id" class="btn btn-sm btn-outline btn-info">Şifre Değiştir</a>
+                                @if (Model.SocialLinks != null)
+                                {
+                                    <a href="/panel/sociallinks/@Model.Id" class="btn btn-sm btn-outline btn-info">Sosyal Link Güncelle</a>
+                                }
+                                else
+                                {
+                                    <a href="/panel/sociallinks/Insert" class="btn btn-sm btn-outline btn-info">Sosyal Link Ekle</a>
+
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-lg-2 control-label">Email :</label>
                             <div class="col-lg-8">
                                 <label class="form-control">@Model.Email</label>

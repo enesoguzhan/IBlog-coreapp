@@ -5,10 +5,10 @@ namespace IBlog.Business.Abstract
 {
     public interface ISocialLinksService
     {
-        public Task<IResult> AddAsync(Categories data);
-        public Task<IResult> UpdateAsync(Categories data);
+        public Task<IResult> AddAsync(SocialLinks data);
+        public Task<IResult> UpdateAsync(SocialLinks data);
         public Task<IResult> DeleteAsync(Guid id);
-        public Task<Categories> GetSocialLinksByUserId(Guid userId);
+        public Task<SocialLinks> GetSocialLinksByUserId(Guid userId);
 
     }
 }

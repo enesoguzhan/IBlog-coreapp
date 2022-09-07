@@ -15,7 +15,7 @@
                 </li>
                 <li class="list-inline-item">
                     <i class="ti-comments mr-2"></i>
-                    Yorum  : @Model.Comments.Count                   
+                    Yorum  : @Model.Comments.Count
                 </li>
             </ul>
         </div>
@@ -35,66 +35,63 @@
     </article>
 </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        <h2>Yorumlar:</h2>
-        @if (Model.Comments != null && Model.Comments.Count > 0)
-        {
-            @foreach (var comments in Model.Comments)
-            {
-                <div class="social-feed-box table-bordered" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
-                    <div class="social-avatar">
-                        <a href="" class="pull-left">
-                            <img alt="image" src="/images/@comments.User.AvatarImage">
-                        </a>
-                        <div class="media-body">
-                            <a href="#">
-                                @comments.User.Name @comments.User.Surname
-                            </a>
-                            <small class="text-muted">@comments.CreationDate</small>
-                        </div>
-                    </div>
-                    <div class="social-body">
-                        <p>
-                            @comments.Comment
-                        </p>
-                    </div>
-                </div>
-            }
 
-        }
-        else
+<div class="col-lg-12">
+    <h2>Yorumlar:</h2>
+    @if (Model.Comments != null && Model.Comments.Count > 0)
+    {
+        @foreach (var comments in Model.Comments)
         {
-            <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
-                <div class="social-body text-center">
-                    <h5>İlk Yorumu Yap</h5>
+            <div class="social-feed-box table-bordered rounded " style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+                <div class="social-avatar">
+                    <img style="width:78px;height:78px;" alt="image" src="/images/@comments.User.AvatarImage">
+                    <div class="media-body">
+                        <a href="#">
+                            @comments.User.Name @comments.User.Surname
+                        </a>
+                        <small class="text-muted">@comments.CreationDate</small>
+                    </div>
+                </div>
+                <div class="social-body">
+                    <p>
+                        @comments.Comment
+                    </p>
                 </div>
             </div>
         }
-        @if (ViewBag.UserInfo.Id != null)
-        {
-            <form method="post" action="/Comments/InsertComment">
-                <input name="BlogId" value="@Model.Id" hidden />
-                <div class="form-group">
-                    <h4>Yorum Yap:</h4>
-                    <div>
-                        <textarea name="Comment" style="width:1137px;height:200px;"></textarea>
-                    </div>
-                </div>
-                <div class="form-group pull-right">
-                    <div class="col-lg-offset-2 col-lg-10 pull-right">
-                        <button class="btn btn-success pull-right" type="submit">Gönder</button>
-                    </div>
-                </div>
-            </form>
-        }
-        else
-        {
-            <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
-                <div class="social-body text-center">
-                    <h4>Yorum Yapmak İçin Giriş Yapınız</h4>
+
+    }
+    else
+    {
+        <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+            <div class="social-body text-center">
+                <h5>İlk Yorumu Yap</h5>
+            </div>
+        </div>
+    }
+    @if (ViewBag.UserInfo.Id != null)
+    {
+        <form method="post" action="/Comments/InsertComment">
+            <input name="BlogId" value="@Model.Id" hidden />
+            <div class="form-group">
+                <h4>Yorum Yap:</h4>
+                <div>
+                    <textarea class="form-control embed-responsive-item" name="Comment" style="resize:none;"></textarea>
                 </div>
             </div>
-        }
-    </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-12">
+                    <button class="btn btn-success float-right right" type="submit">Gönder</button>
+                </div>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="social-feed-box" style="padding:10px 10px 5px 10px; margin-bottom:10px;">
+            <div class="social-body text-center">
+                <h4>Yorum Yapmak İçin Giriş Yapınız</h4>
+            </div>
+        </div>
+    }
 </div>

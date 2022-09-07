@@ -43,7 +43,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("PublishDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(1654));
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 337, DateTimeKind.Local).AddTicks(7403));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(6419));
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 338, DateTimeKind.Local).AddTicks(1455));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -147,7 +147,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("InteractionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 16, 28, 52, 326, DateTimeKind.Local).AddTicks(7971));
+                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 338, DateTimeKind.Local).AddTicks(2830));
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
