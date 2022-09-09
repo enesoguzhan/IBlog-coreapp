@@ -8,6 +8,7 @@ namespace IBlog.Business.Abstract
     {
         public Task<IResult> AddAsync(Blogs data);
         public Task<IResult> UpdateAsync(BlogsUpdateDTO data);
+        public Task<BlogsUpdateDTO> GetUpdateBlogs(Guid id);
         public Task<IResult> DeleteAsync(Guid id);
         public Task<IList<Blogs>> GetAllBlogsAsync();
         public Task<IList<Blogs>> GetAllBlogsActiveAsync();

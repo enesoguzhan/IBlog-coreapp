@@ -42,7 +42,8 @@ namespace IBlog.Business.Concrete
             Users data = unitOfWork.usersRepo.IncludeMultiple(s => s.Id == userId, s => s.Include(s => s.Blogs)
             .ThenInclude(s => s.Images).
             Include(s => s.Blogs).
-            ThenInclude(s => s.Categories)).Result;
+            ThenInclude(s => s.Categories)
+            .Include(s=>s.SocialLinks)).Result;
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
 

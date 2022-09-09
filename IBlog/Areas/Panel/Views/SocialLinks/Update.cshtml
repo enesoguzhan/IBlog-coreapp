@@ -6,6 +6,9 @@
             <li>
                 <a href="/panel/home/Index">Ana Sayfa</a>
             </li>
+            <li>
+                <a href="/panel/users/Index/@Model.UserId">Profil Düzenle</a>
+            </li>
             <li class="active">
                 <strong>Sosyal Link Düzenle</strong>
             </li>
@@ -20,7 +23,7 @@
                     <h5>Sosyal Link Düzenle</h5>
                 </div>
                 <div class="ibox-content">
-                    <form class="form-horizontal" role="form" method="post" action="/panel/sociallinks/update/@Model.UserId">
+                    <form class="form-horizontal" role="form" method="post" action="/panel/sociallinks/update/@Model.Id/@Model.UserId">
                         @if (ViewBag.Message != null)
                         {
                             <div class="alert alert-danger">

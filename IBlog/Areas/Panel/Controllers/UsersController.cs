@@ -24,8 +24,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/Panel/Users/Index/{id:Guid}")]
         public IActionResult Index(Guid id)
         {
-            ViewBag.Title = "Profil Güncelle";
-            var data = usersService.GetUser(id).Result;
+            ViewBag.Title = "Profil Güncelle"; 
             return View(usersService.GetUser(id).Result);
         }
 

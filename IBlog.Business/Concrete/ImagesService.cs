@@ -34,5 +34,10 @@ namespace IBlog.Business.Concrete
         {
             return await unitOfWork.imagesRepo.AsyncDelete(s => s.Id == id).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
+
+        public async Task<IList<Images>> GetImagesByBlogIdAsync(Guid BlogId)
+        {
+            return await unitOfWork.imagesRepo.AsyncGetAll(s => s.BlogId == BlogId);
+        }
     }
 }

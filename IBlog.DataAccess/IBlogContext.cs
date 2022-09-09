@@ -16,17 +16,17 @@ namespace IBlog.DataAccess
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.UseSqlServer(configuration.GetConnectionString("ConnectionStringSql"));
-            //optionsBuilder.UseSqlServer("Server=LT199;Database=IBlogDb;Trusted_Connection=True;");
-             optionsBuilder.UseSqlServer("Server=DESKTOP-58;Database=IBlogDb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=LT199;Database=IBlogDb;Trusted_Connection=True;");
+            // optionsBuilder.UseSqlServer("Server=DESKTOP-58;Database=IBlogDb;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UsersMap());
+            modelBuilder.ApplyConfiguration(new CategoriesMap());
             modelBuilder.ApplyConfiguration(new BlogsMap());
             modelBuilder.ApplyConfiguration(new CommentsMap());
             modelBuilder.ApplyConfiguration(new InteractionsMap());
-            modelBuilder.ApplyConfiguration(new UsersMap());
-            modelBuilder.ApplyConfiguration(new CategoriesMap());
             modelBuilder.ApplyConfiguration(new ImagesMap());
             modelBuilder.ApplyConfiguration(new SocialLinksMap());
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBlog.DataAccess.Migrations
 {
     [DbContext(typeof(IBlogContext))]
-    [Migration("20220907163014_mig_1")]
+    [Migration("20220908051559_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("PublishDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 337, DateTimeKind.Local).AddTicks(7403));
+                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(3835));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -77,6 +77,18 @@ namespace IBlog.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bb76254e-64ec-42a2-880d-f01b4784dd8e"),
+                            Name = "Spor"
+                        },
+                        new
+                        {
+                            Id = new Guid("716091b1-a0f7-460b-9d1c-7f45287cf3fe"),
+                            Name = "Oyun"
+                        });
                 });
 
             modelBuilder.Entity("IBlog.Entities.Comments", b =>
@@ -95,7 +107,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 338, DateTimeKind.Local).AddTicks(1455));
+                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(8706));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -149,7 +161,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("InteractionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 7, 19, 30, 14, 338, DateTimeKind.Local).AddTicks(2830));
+                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 20, DateTimeKind.Local).AddTicks(194));
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
@@ -170,25 +182,28 @@ namespace IBlog.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Facebook")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Github")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Linkedin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Twitter")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("SocialLinks");
                 });
@@ -223,9 +238,6 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<int>("RoleType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("SocialLinksId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -233,11 +245,31 @@ namespace IBlog.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SocialLinksId")
-                        .IsUnique()
-                        .HasFilter("[SocialLinksId] IS NOT NULL");
-
                     b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("475a613b-f8d4-45ee-82ee-1003f267814e"),
+                            AvatarImage = "b91f2c8d-1c82-4b86-9bb7-44ee5649bb20.jpg",
+                            Email = "yucar@ozatashipyard.com",
+                            Explanation = "Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test ",
+                            Name = "Yusuf",
+                            Password = "58775877",
+                            RoleType = 0,
+                            Surname = "Uçar"
+                        },
+                        new
+                        {
+                            Id = new Guid("577d0a6c-cfbe-4d1e-940a-50b9d1e6d5a3"),
+                            AvatarImage = "d7f30a1e-a537-45b6-899c-dee04ecc555b.jpg",
+                            Email = "earaci@ozatashipyard.com",
+                            Explanation = "Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama777777777585858",
+                            Name = "Enes Oğuzhan",
+                            Password = "58775877",
+                            RoleType = 1,
+                            Surname = "Aracı"
+                        });
                 });
 
             modelBuilder.Entity("IBlog.Entities.Blogs", b =>
@@ -300,13 +332,15 @@ namespace IBlog.DataAccess.Migrations
                     b.Navigation("Blog");
                 });
 
-            modelBuilder.Entity("IBlog.Entities.Users", b =>
+            modelBuilder.Entity("IBlog.Entities.SocialLinks", b =>
                 {
-                    b.HasOne("IBlog.Entities.SocialLinks", "SocialLinks")
-                        .WithOne("User")
-                        .HasForeignKey("IBlog.Entities.Users", "SocialLinksId");
+                    b.HasOne("IBlog.Entities.Users", "User")
+                        .WithOne("SocialLinks")
+                        .HasForeignKey("IBlog.Entities.SocialLinks", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("SocialLinks");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IBlog.Entities.Blogs", b =>
@@ -323,17 +357,14 @@ namespace IBlog.DataAccess.Migrations
                     b.Navigation("Blogs");
                 });
 
-            modelBuilder.Entity("IBlog.Entities.SocialLinks", b =>
-                {
-                    b.Navigation("User")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("IBlog.Entities.Users", b =>
                 {
                     b.Navigation("Blogs");
 
                     b.Navigation("Comments");
+
+                    b.Navigation("SocialLinks")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

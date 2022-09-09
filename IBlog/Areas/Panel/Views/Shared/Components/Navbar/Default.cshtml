@@ -23,9 +23,12 @@
                 @ViewBag.UserInfo.NameSurnameFirstChar
             </div>
         </li>
-        <li>
-            <a href="/panel/users/UserList"><i class="fa fa-users"></i> <span class="nav-label">Kullanıcılar</span></a>
-        </li>
+        @if (ViewBag.UserInfo.Role == "Yönetici")
+        {
+            <li>
+                <a href="/panel/users/UserList"><i class="fa fa-users"></i> <span class="nav-label">Kullanıcılar</span></a>
+            </li>
+        }
         <li>
             <a href="/panel/categories/Index"><i class="fa fa-list"></i> <span class="nav-label">Kategoriler</span></a>
         </li>

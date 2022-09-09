@@ -21,30 +21,50 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/sociallinks/update/{Id:Guid}")]
         public IActionResult Update(Guid Id)
         {
+        
             var data = _socialLinksService.GetSocialLinksByUserId(Id).Result;
             return View(data);
         }
 
         [HttpPost]
-        [Route("/panel/sociallinks/update/{Id:Guid}")]
+        [Route("/panel/sociallinks/update/{Id:Guid}/{UserId:Guid}")]
         public IActionResult Update(Guid Id, SocialLinks socialLinks)
         {
-            return View();
+           var result = _socialLinksService.UpdateAsync(socialLinks).Result;
+            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
+            }
+            else
+            {
+                ViewBag.Message = result.Message;
+            }
+            return View(_socialLinksService.GetSocialLinksByUserId(socialLinks.UserId).Result);
         }
 
         [HttpGet]
-        [Route("/panel/sociallinks/Insert")]
-        public IActionResult Insert()
+        [Route("/panel/sociallinks/Insert/{UserId}")]
+        public IActionResult Insert(Guid UserId)
         {
+            ViewBag.UserId = UserId;
             return View();
         }
 
         [HttpPost]
-        [Route("/panel/sociallinks/Insert")]
+        [Route("/panel/sociallinks/Insert/{UserId}")]
         public IActionResult Insert(SocialLinks socialLinks)
         {
             var result = _socialLinksService.AddAsync(socialLinks).Result;
-            return View();
+            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            {
+                TempData["Message"] = result.Message;
+                return Redirect($"/panel/users/Index/{socialLinks.UserId}");
+            }
+            else
+            {
+                ViewBag.Message = result.Message;
+                return View();
+            }
         }
     }
 }

@@ -4,20 +4,36 @@
         <div class="col-12">
             <div class="title-bordered mb-5 d-flex align-items-center">
                 <h1 class="h4">@Model.NameSurname</h1>
-                <ul class="list-inline social-icons ml-auto mr-3 d-none d-sm-block">
-                    <li class="list-inline-item">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#"><i class="ti-twitter"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#"><i class="ti-github"></i></a>
-                    </li>
-                </ul>
+                @if (Model.SocialLinks != null)
+                {
+
+                    <ul class="list-inline social-icons ml-auto mr-3 d-none d-sm-block">
+                        @if (!string.IsNullOrEmpty(Model.SocialLinks.Facebook))
+                        {
+                            <li class="list-inline-item">
+                                <a href="https://www.facebook.com/@Model.SocialLinks.Facebook"><i class="ti-facebook"></i></a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.SocialLinks.Twitter))
+                        {
+                            <li class="list-inline-item">
+                                <a href="https://www.twitter.com/@Model.SocialLinks.Twitter"><i class="ti-twitter"></i></a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.SocialLinks.Linkedin))
+                        {
+                            <li class="list-inline-item">
+                                <a href="https://www.linkedin.com/in/@Model.SocialLinks.Linkedin"><i class="ti-linkedin"></i></a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.SocialLinks.Github))
+                        {
+                            <li class="list-inline-item">
+                                <a href="https://www.github.com/@Model.SocialLinks.Github"><i class="ti-github"></i></a>
+                            </li>
+                        }
+                    </ul>
+                }
             </div>
         </div>
         <div class="col-lg-2 col-md-4 mb-4 mb-md-0 text-center text-md-left">

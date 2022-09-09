@@ -59,26 +59,34 @@ namespace IBlog.UI.Areas.Panel.Controllers
         public IActionResult Insert(Blogs blogs, IList<IFormFile> images)
         {
             ViewBag.Title = "Blog Oluştur";
-            string imageName = string.Empty;
-            ViewBag.Message = blogsService.AddAsync(blogs).Result;
-            foreach (var item in images)
-            {
-                imageName = Helpers.ImagesUploader.UploadImage(item);
-                if (imageName == "0")
-                {
-                    ViewBag.Message = "Ekleme Başarısız, Lütfen Jpeg veya Jpg uzantılı resim seçiniz";
-                }
-                else if (imageName == "1")
-                {
-                    ViewBag.Message = "Ekleme Başarısız, Lütfen resim seçiniz";
-                }
-                else if (!string.IsNullOrEmpty(imageName))
-                {
-                    imagesService.AddAsync(imageName, blogs.Id);
-                }
-            }
 
-            return Redirect("/panel/blogs/Index");
+            if (ModelState.IsValid)
+            {
+                string imageName = string.Empty;
+                TempData["Message"] = blogsService.AddAsync(blogs).Result;
+                foreach (var item in images)
+                {
+                    imageName = Helpers.ImagesUploader.UploadImage(item);
+                    if (imageName == "0")
+                    {
+                        ViewBag.Message = "Ekleme Başarısız, Lütfen Jpeg veya Jpg uzantılı resim seçiniz";
+                    }
+                    else if (imageName == "1")
+                    {
+                        ViewBag.Message = "Ekleme Başarısız, Lütfen resim seçiniz";
+                    }
+                    else if (!string.IsNullOrEmpty(imageName))
+                    {
+                        imagesService.AddAsync(imageName, blogs.Id);
+                    }
+                }
+                return Redirect("/panel/blogs/Index");
+            }
+            else
+            {
+                ViewBag.Categories = categoriesService.GetAllCategoriesAsync().Result;
+                return View();
+            }
         }
 
         [Route("/Panel/Blogs/Update/{id:Guid}")]
@@ -86,30 +94,52 @@ namespace IBlog.UI.Areas.Panel.Controllers
         {
             ViewBag.Title = "Blog Güncelle";
             ViewBag.Categories = categoriesService.GetAllCategoriesAsync().Result;
-            return View(blogsService.GetBlogAllInclude(id).Result);
+            return View(blogsService.GetUpdateBlogs(id).Result);
         }
 
         [HttpPost]
         [Route("/panel/blogs/Update/{id:Guid}")]
-        public IActionResult Update(Guid id, BlogsUpdateDTO blogs)
+        public IActionResult Update(Guid id, BlogsUpdateDTO blogs, IList<IFormFile> images)
         {
             var userClaims = userManager.GetUserClaims();
             ViewBag.Title = "Blog Güncelle";
             ViewBag.Categories = categoriesService.GetAllCategoriesAsync().Result;
-            blogs.Id = id;
-            var result = blogsService.UpdateAsync(blogs).Result;
-            if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+            if (ModelState.IsValid)
             {
-                TempData["Message"] = result.Message;
-                if (userClaims.Role == "Yönetici")
-                    return Redirect("/panel/blogs/Index");
+                string imageName = string.Empty;
+                blogs.Id = id;
+                foreach (var item in images)
+                {
+                    imageName = Helpers.ImagesUploader.UploadImage(item);
+                    if (imageName == "0")
+                    {
+                        ViewBag.Message = "Ekleme Başarısız, Lütfen Jpeg veya Jpg uzantılı resim seçiniz";
+                    }
+                    else if (imageName == "1")
+                    {
+                        ViewBag.Message = "Ekleme Başarısız, Lütfen resim seçiniz";
+                    }
+                    else if (!string.IsNullOrEmpty(imageName))
+                    {
+                        imagesService.AddAsync(imageName, blogs.Id);
+                    }
+                }
+                var result = blogsService.UpdateAsync(blogs).Result;
+                if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
+                {
+                    TempData["Message"] = result.Message;
+
+                    return View(blogsService.GetUpdateBlogs(id).Result);
+                }
                 else
-                    return Redirect($"/panel/blogs/UserBlogsList/{userClaims.Id}");
+                {
+                    ViewBag.Message = result.Message;
+                    return View(blogsService.GetUpdateBlogs(id).Result);
+                }
             }
             else
             {
-                ViewBag.Message = result.Message;
-                return View(blogsService.GetBlog(id).Result);
+                return View(blogsService.GetUpdateBlogs(id).Result);
             }
         }
     }

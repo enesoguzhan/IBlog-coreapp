@@ -20,7 +20,6 @@ namespace IBlog.Business.Concrete
         public async Task<IResult> AddAsync(SocialLinks data)
         {
             data.Id = Guid.NewGuid();
-            data.UserId = new Guid(_userManager.GetUserClaims().Id);
             return await _unitOfWork.socialLinksRepo.AsyncAdd(data).ContinueWith(s => _unitOfWork.SaveChanges()).Result;
         }
 
@@ -34,9 +33,9 @@ namespace IBlog.Business.Concrete
             return await _unitOfWork.socialLinksRepo.AsyncFirst(s => s.UserId == userId, s => s.User);
         }
 
-        public Task<IResult> UpdateAsync(SocialLinks data)
+        public async Task<IResult> UpdateAsync(SocialLinks data)
         {
-            throw new NotImplementedException();
+            return await _unitOfWork.socialLinksRepo.AsyncUpdate(data).ContinueWith(s => _unitOfWork.SaveChanges()).Result;
         }
     }
 }

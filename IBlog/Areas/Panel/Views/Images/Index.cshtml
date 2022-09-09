@@ -1,0 +1,42 @@
+﻿@model List<IBlog.Entities.Images>
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Kategori Listesi</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/panel/home/Index">Ana Sayfa</a>
+            </li>
+            <li>
+                <a href="/panel/blogs/Index">Bloglar</a>
+            </li>
+            <li>
+                <a href="/panel/blogs/Update/@Model.FirstOrDefault().BlogId">Blog Düzenle</a>
+            </li>
+            <li class="active">
+                <strong>Blog Resim Düzenle</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                @foreach (var images in Model)
+                {
+                    <div class="col-lg-3">
+                        <div class="contact-box center-version">                           
+                                <img style="width:400px;height:200px;" alt="image" class="img-responsive img-container" src="/images/@images.Name">
+                            <div class="contact-box-footer">
+                                <div class="m-t-xs btn-group">
+                                    <a href="/panel/Images/Delete/@images.Id/@images.Name/@images.BlogId" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Sil</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

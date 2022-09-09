@@ -103,5 +103,12 @@ namespace IBlog.Business.Concrete
             var data = unitOfWork.blogsRepo.AsyncGetAll(s => s.UserId == id, s => s.Categories).Result;
             return await Task.Run(() => mapper.Map<IList<BlogsListDTO>>(data));
         }
+
+        public async Task<BlogsUpdateDTO> GetUpdateBlogs(Guid Id)
+        {
+            var data = unitOfWork.blogsRepo.AsyncFirst(s => s.Id == Id, s => s.Images).Result;
+
+            return await Task.Run(() => mapper.Map<BlogsUpdateDTO>(data));
+        }
     }
 }

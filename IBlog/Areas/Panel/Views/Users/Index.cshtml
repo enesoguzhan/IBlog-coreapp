@@ -36,11 +36,11 @@
                                 <a href="/panel/users/passwordchanged/@Model.Id" class="btn btn-sm btn-outline btn-info">Şifre Değiştir</a>
                                 @if (Model.SocialLinks != null)
                                 {
-                                    <a href="/panel/sociallinks/@Model.Id" class="btn btn-sm btn-outline btn-info">Sosyal Link Güncelle</a>
+                                    <a href="/panel/sociallinks/update/@Model.Id" class="btn btn-sm btn-outline btn-info">Sosyal Link Güncelle</a>
                                 }
                                 else
                                 {
-                                    <a href="/panel/sociallinks/Insert" class="btn btn-sm btn-outline btn-info">Sosyal Link Ekle</a>
+                                    <a href="/panel/sociallinks/Insert/@Model.Id" class="btn btn-sm btn-outline btn-info">Sosyal Link Ekle</a>
 
                                 }
                             </div>

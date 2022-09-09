@@ -14,6 +14,7 @@ namespace IBlog.DataAccess.Mappings
 
             builder.HasMany(s => s.Blogs).WithOne(s => s.Categories).HasForeignKey(s => s.CategoryId);
 
+            builder.HasData(new Categories { Id = Guid.NewGuid(), Name = "Spor" }, new Categories { Id = Guid.NewGuid(), Name = "Oyun" });
             builder.ToTable("Categories");
         }
     }

@@ -1,8 +1,11 @@
+
+using FluentValidation.AspNetCore;
 using IBlog.Business.Abstract;
 using IBlog.Business.AutoMapper;
 using IBlog.Business.Concrete;
 using IBlog.Business.EmailService;
 using IBlog.Business.UserManager;
+using IBlog.Business.Validators.Blog;
 using IBlog.DataAccess;
 using IBlog.DataAccess.UnitOfWorks;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,7 +24,7 @@ builder.Services.AddScoped<ISocialLinksService, SocialLinksService>();
 builder.Services.AddScoped<ICommentsService, CommentsService>();
 
 builder.Services.AddAutoMapper(typeof(AutoProfile));
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<BlogsValidator>());
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(s =>
 {

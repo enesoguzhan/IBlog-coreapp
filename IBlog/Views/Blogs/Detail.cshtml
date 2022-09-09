@@ -5,7 +5,7 @@
             <h1 class="h2 mb-3">@Model.Name</h1>
             <ul class="list-inline post-meta mb-3">
                 <li class="list-inline-item">
-                    <i class="ti-user mr-2"></i><a href="author.html">
+                    <i class="ti-user mr-2"></i><a href="/authors/@Model.User.Id">
                         @Model.User.Name @Model.User.Surname
                     </a>
                 </li>
@@ -46,7 +46,7 @@
                 <div class="social-avatar">
                     <img style="width:78px;height:78px;" alt="image" src="/images/@comments.User.AvatarImage">
                     <div class="media-body">
-                        <a href="#">
+                        <a href="/authors/@comments.User.Id">
                             @comments.User.Name @comments.User.Surname
                         </a>
                         <small class="text-muted">@comments.CreationDate</small>
