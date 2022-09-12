@@ -3,6 +3,7 @@ using IBlog.Entities;
 using IBlog.Entities.DTO.Blogs;
 using IBlog.Entities.DTO.Categories;
 using IBlog.Entities.DTO.Comments;
+using IBlog.Entities.DTO.PanelComponent;
 using IBlog.Entities.DTO.Users;
 using System.Security.Cryptography;
 
@@ -46,6 +47,10 @@ namespace IBlog.Business.AutoMapper
 
             #region Comments
             CreateMap<Comments, CommentsInsertDTO>().ReverseMap();
+            CreateMap<IList<Comments>, TotalCommentsCountDTO>()
+                .ForMember(destination => destination.CommentsCount, operation => operation.MapFrom(s => s.Count))
+                .ReverseMap();
+
             #endregion
         }
     }
