@@ -4,6 +4,7 @@ using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Categories;
+using IBlog.Entities.DTO.PanelComponent;
 using System.Runtime.CompilerServices;
 
 namespace IBlog.Business.Concrete
@@ -52,6 +53,17 @@ namespace IBlog.Business.Concrete
         public async Task<Categories> GetCategory(Guid id)
         {
             return await unitOfWork.categoriesRepo.AsyncFirst(s => s.Id == id);
+        }
+
+        public async Task<TotalCategoriesCountDTO> TotalCategoriesCount()
+        {
+            int count = unitOfWork.categoriesRepo.AsyncGetAll().Result.Count;
+            TotalCategoriesCountDTO totalCategoriesCount = new()
+            {
+                CategoriesCount = count
+            };
+
+            return await Task.Run(() => totalCategoriesCount);
         }
 
         public async Task<IResult> UpdateAsync(Categories data)

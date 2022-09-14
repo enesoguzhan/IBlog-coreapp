@@ -21,7 +21,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/sociallinks/update/{Id:Guid}")]
         public IActionResult Update(Guid Id)
         {
-        
+            ViewBag.Title = "Sosyal Link Ekle";
             var data = _socialLinksService.GetSocialLinksByUserId(Id).Result;
             return View(data);
         }
@@ -30,7 +30,8 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/sociallinks/update/{Id:Guid}/{UserId:Guid}")]
         public IActionResult Update(Guid Id, SocialLinks socialLinks)
         {
-           var result = _socialLinksService.UpdateAsync(socialLinks).Result;
+            ViewBag.Title = "Sosyal Link Ekle";
+            var result = _socialLinksService.UpdateAsync(socialLinks).Result;
             if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
             {
                 TempData["Message"] = result.Message;
@@ -46,6 +47,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/sociallinks/Insert/{UserId}")]
         public IActionResult Insert(Guid UserId)
         {
+            ViewBag.Title = "Sosyal Link Ekle";
             ViewBag.UserId = UserId;
             return View();
         }
@@ -54,6 +56,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/sociallinks/Insert/{UserId}")]
         public IActionResult Insert(SocialLinks socialLinks)
         {
+            ViewBag.Title = "Sosyal Link Ekle";
             var result = _socialLinksService.AddAsync(socialLinks).Result;
             if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
             {

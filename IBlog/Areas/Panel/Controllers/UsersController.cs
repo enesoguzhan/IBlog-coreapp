@@ -24,7 +24,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/Panel/Users/Index/{id:Guid}")]
         public IActionResult Index(Guid id)
         {
-            ViewBag.Title = "Profil Güncelle"; 
+            ViewBag.Title = "Profil Güncelle";
             return View(usersService.GetUser(id).Result);
         }
 
@@ -82,6 +82,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/users/passwordchanged/{Id:Guid}")]
         public IActionResult PasswordChanged(Guid Id)
         {
+            ViewBag.Title = "Şifre Değiştir";
             return View(usersService.GetUserPassword(Id).Result);
         }
 
@@ -89,6 +90,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
         [Route("/panel/users/passwordchanged/{Id:Guid}")]
         public IActionResult PasswordChanged(Guid Id, PasswordUpdateDTO passwordUpdateDTO)
         {
+            ViewBag.Title = "Şifre Değiştir";
             var result = usersService.UpdateUserPassword(passwordUpdateDTO).Result;
             if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
             {
@@ -100,6 +102,14 @@ namespace IBlog.UI.Areas.Panel.Controllers
                 ViewBag.Message = result.Message;
                 return View(usersService.GetUserPassword(Id).Result);
             }
-        }       
+        }
+
+        [Route("/panel/users/delete/{Id:Guid}")]
+        public IActionResult Delete(Guid Id)
+        {
+            var result = usersService.DeleteAsync(Id).Result;
+            TempData["Message"] = result.Message;
+            return Redirect("/panel/users/UserList");
+        }
     }
 }

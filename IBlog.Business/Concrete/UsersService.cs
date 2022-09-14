@@ -3,6 +3,7 @@ using IBlog.Business.Abstract;
 using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
+using IBlog.Entities.DTO.PanelComponent;
 using IBlog.Entities.DTO.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,7 @@ namespace IBlog.Business.Concrete
         {
             data.Id = Guid.NewGuid();
             data.RoleType = 0;
+            data.CreationDatetime = DateTime.Now;
             return await unitOfWork.usersRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
 
@@ -43,7 +45,7 @@ namespace IBlog.Business.Concrete
             .ThenInclude(s => s.Images).
             Include(s => s.Blogs).
             ThenInclude(s => s.Categories)
-            .Include(s=>s.SocialLinks)).Result;
+            .Include(s => s.SocialLinks)).Result;
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
 
@@ -55,7 +57,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<Users> GetUser(Guid id)
         {
-            return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id,s=>s.SocialLinks);
+            return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id, s => s.SocialLinks);
         }
 
         public Task<PasswordUpdateDTO> GetUserPassword(Guid userId)
@@ -75,9 +77,25 @@ namespace IBlog.Business.Concrete
             return await unitOfWork.usersRepo.Login(Email, Password);
         }
 
+        public Task<NewUsersDTO> NewUsers()
+        {
+            Users user = unitOfWork.usersRepo.AsyncGetAll().Result.OrderByDescending(s => s.CreationDatetime).FirstOrDefault();
+            return Task.Run(() => mapper.Map<NewUsersDTO>(user));
+        }
+
         public async Task<string> PaswordForgotAsync(string Email)
         {
             return await unitOfWork.usersRepo.ForgotPassword(Email);
+        }
+
+        public async Task<TotalUsersCountDTO> TotalUsersCount()
+        {
+            int count = unitOfWork.usersRepo.AsyncGetAll().Result.Count;
+            TotalUsersCountDTO totalUsersCount = new()
+            {
+                UsersCount = count
+            };
+            return await Task.Run(() => totalUsersCount);
         }
 
         public async Task<IResult> UpdateAsync(Guid id, Users data)
@@ -86,7 +104,7 @@ namespace IBlog.Business.Concrete
             if (user != null)
             {
                 user.Name = data.Name;
-                user.Surname = data.Surname;       
+                user.Surname = data.Surname;
                 user.Explanation = data.Explanation;
                 user.AvatarImage = data.AvatarImage ?? user.AvatarImage;
             }

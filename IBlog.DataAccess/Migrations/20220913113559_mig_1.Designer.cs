@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IBlog.DataAccess.Migrations
 {
     [DbContext(typeof(IBlogContext))]
-    [Migration("20220908051559_mig_1")]
+    [Migration("20220913113559_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("PublishDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(3835));
+                        .HasDefaultValue(new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(1064));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -81,12 +81,12 @@ namespace IBlog.DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bb76254e-64ec-42a2-880d-f01b4784dd8e"),
+                            Id = new Guid("9bda077c-2be9-4170-80ad-98164040c761"),
                             Name = "Spor"
                         },
                         new
                         {
-                            Id = new Guid("716091b1-a0f7-460b-9d1c-7f45287cf3fe"),
+                            Id = new Guid("739a8565-1df4-4c5b-be8a-73e9b81ab7b3"),
                             Name = "Oyun"
                         });
                 });
@@ -107,7 +107,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(8706));
+                        .HasDefaultValue(new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(4445));
 
                     b.Property<bool>("Status")
                         .ValueGeneratedOnAdd()
@@ -161,7 +161,7 @@ namespace IBlog.DataAccess.Migrations
                     b.Property<DateTime>("InteractionDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2022, 9, 8, 8, 15, 59, 20, DateTimeKind.Local).AddTicks(194));
+                        .HasDefaultValue(new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(5660));
 
                     b.Property<string>("IpAddress")
                         .IsRequired()
@@ -218,6 +218,11 @@ namespace IBlog.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<DateTime>("CreationDatetime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(6118));
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -252,7 +257,8 @@ namespace IBlog.DataAccess.Migrations
                         {
                             Id = new Guid("475a613b-f8d4-45ee-82ee-1003f267814e"),
                             AvatarImage = "b91f2c8d-1c82-4b86-9bb7-44ee5649bb20.jpg",
-                            Email = "yucar@ozatashipyard.com",
+                            CreationDatetime = new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(8296),
+                            Email = "yucar@gmail.com",
                             Explanation = "Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test ",
                             Name = "Yusuf",
                             Password = "58775877",
@@ -263,7 +269,8 @@ namespace IBlog.DataAccess.Migrations
                         {
                             Id = new Guid("577d0a6c-cfbe-4d1e-940a-50b9d1e6d5a3"),
                             AvatarImage = "d7f30a1e-a537-45b6-899c-dee04ecc555b.jpg",
-                            Email = "earaci@ozatashipyard.com",
+                            CreationDatetime = new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(8302),
+                            Email = "earaci@gmail.com",
                             Explanation = "Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama777777777585858",
                             Name = "Enes Oğuzhan",
                             Password = "58775877",

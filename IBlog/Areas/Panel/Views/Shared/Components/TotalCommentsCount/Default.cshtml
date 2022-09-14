@@ -1,4 +1,5 @@
-﻿<div class="col-lg-3">
+﻿@model IBlog.Entities.DTO.PanelComponent.TotalCommentsCountDTO
+<div class="col-lg-3">
     <div class="widget style1 yellow-bg">
         <div class="row">
             <div class="col-xs-4">
@@ -6,7 +7,7 @@
             </div>
             <div class="col-xs-8 text-right">
                 <span> Toplam Yapılan Yorum </span>
-                <h2 class="font-bold">12</h2>
+                <h2 class="font-bold">@Model.CommentsCount</h2>
             </div>
         </div>
     </div>

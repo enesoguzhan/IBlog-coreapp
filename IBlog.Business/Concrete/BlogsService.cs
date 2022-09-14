@@ -5,14 +5,9 @@ using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Blogs;
+using IBlog.Entities.DTO.PanelComponent;
 using IBlog.Entities.DTO.UserManeger;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IBlog.Business.Concrete
 {
@@ -29,14 +24,14 @@ namespace IBlog.Business.Concrete
             this.userManager = userManager;
         }
 
-        public async Task<IResult> AddAsync(Blogs data)
+        public async Task<IResult> AddAsync(BlogsInsertDTO data)
         {
             UserClaims userClaims = userManager.GetUserClaims();
-
-            data.UserId = new Guid(userClaims.Id);
             data.Id = Guid.NewGuid();
-            data.PublishDateTime = DateTime.Now;
-            return await unitOfWork.blogsRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
+            var datas = mapper.Map<Blogs>(data);
+            datas.UserId = new Guid(userClaims.Id);
+            datas.PublishDateTime = DateTime.Now;
+            return await unitOfWork.blogsRepo.AsyncAdd(datas).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
 
         public async Task<IResult> DeleteAsync(Guid id)
@@ -109,6 +104,22 @@ namespace IBlog.Business.Concrete
             var data = unitOfWork.blogsRepo.AsyncFirst(s => s.Id == Id, s => s.Images).Result;
 
             return await Task.Run(() => mapper.Map<BlogsUpdateDTO>(data));
+        }
+
+        public async Task<TotalBlogsCountDTO> TotalBlogsCount()
+        {
+            int count = unitOfWork.blogsRepo.AsyncGetAll().Result.Count;
+            TotalBlogsCountDTO totalBlogsCount = new()
+            {
+                BlogsCount = count
+            };
+            return await Task.Run(() => totalBlogsCount);
+        }
+
+        public Task<LastAddedBlogDTO> LastAddedBlog()
+        {
+            Blogs blog = unitOfWork.blogsRepo.AsyncGetAll(null,s=>s.Images).Result.OrderByDescending(s => s.PublishDateTime).FirstOrDefault();
+            return Task.Run(() => mapper.Map<LastAddedBlogDTO>(blog));
         }
     }
 }

@@ -56,14 +56,14 @@ namespace IBlog.UI.Areas.Panel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Insert(Blogs blogs, IList<IFormFile> images)
+        public IActionResult Insert(BlogsInsertDTO blogs, IList<IFormFile> images)
         {
             ViewBag.Title = "Blog Oluştur";
 
             if (ModelState.IsValid)
             {
                 string imageName = string.Empty;
-                TempData["Message"] = blogsService.AddAsync(blogs).Result;
+                TempData["Message"] = blogsService.AddAsync(blogs).Result.Message;
                 foreach (var item in images)
                 {
                     imageName = Helpers.ImagesUploader.UploadImage(item);
@@ -141,6 +141,17 @@ namespace IBlog.UI.Areas.Panel.Controllers
             {
                 return View(blogsService.GetUpdateBlogs(id).Result);
             }
+        }
+
+        [HttpGet]
+        [Route("/panel/blogs/Delete/{Id:Guid}")]
+        public IActionResult Delete(Guid Id)
+        {
+            var result = blogsService.DeleteAsync(Id).Result;
+            TempData["Message"] = result.Message;
+            return Redirect("/panel/blogs/Index");
+
+
         }
     }
 }

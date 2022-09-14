@@ -5,7 +5,6 @@ using IBlog.Entities.DTO.Categories;
 using IBlog.Entities.DTO.Comments;
 using IBlog.Entities.DTO.PanelComponent;
 using IBlog.Entities.DTO.Users;
-using System.Security.Cryptography;
 
 namespace IBlog.Business.AutoMapper
 {
@@ -15,12 +14,20 @@ namespace IBlog.Business.AutoMapper
         {
             #region Blogs
             CreateMap<Blogs, BlogsUpdateDTO>().ReverseMap();
+            CreateMap<Blogs, BlogsInsertDTO>().ReverseMap();
 
             CreateMap<Blogs, LastAddedBlogsDTO>().ReverseMap();
+            CreateMap<Blogs, TotalBlogsCountDTO>().ReverseMap();
 
             CreateMap<Blogs, BlogsListDTO>()
                 .ForMember(destination => destination.UserName, operation => operation.MapFrom(s => s.User.Name + " " + s.User.Surname))
                 .ForMember(destination => destination.CategoryName, operation => operation.MapFrom(s => s.Categories.Name)).ReverseMap();
+
+            CreateMap<Blogs, LastAddedBlogDTO>()
+                .ForMember(destination => destination.Explanation, operation => operation.MapFrom(s => s.Explanation.Substring(0, 27) + "..."))
+                .ForMember(destination => destination.Image, operation => operation.MapFrom(s => s.Images.FirstOrDefault().Name))
+                .ReverseMap();
+
 
             #endregion
 
@@ -43,13 +50,21 @@ namespace IBlog.Business.AutoMapper
               .ForMember(destination => destination.Explanation, operation => operation.MapFrom(s => s.Explanation.Substring(0, 27) + "..."))
               .ForMember(destination => destination.RoleName, operation => operation.MapFrom(s => s.RoleType == 1 ? "Yönetici" : "Yazar")).ReverseMap();
             CreateMap<Users, PasswordUpdateDTO>().ReverseMap();
+            CreateMap<Users, TotalUsersCountDTO>().ReverseMap();
+
+            CreateMap<Users, NewUsersDTO>()
+                .ForMember(destination => destination.NameSurname, operation => operation.MapFrom(s => s.Name + " " + s.Surname))
+                .ForMember(destination => destination.Explanation, operation => operation.MapFrom(s => s.Explanation.Substring(0, 27) + "...")).ReverseMap();
+
+            #endregion
+
+            #region Categories
+            CreateMap<Categories, TotalCategoriesCountDTO>().ReverseMap();
             #endregion
 
             #region Comments
             CreateMap<Comments, CommentsInsertDTO>().ReverseMap();
-            CreateMap<IList<Comments>, TotalCommentsCountDTO>()
-                .ForMember(destination => destination.CommentsCount, operation => operation.MapFrom(s => s.Count))
-                .ReverseMap();
+            CreateMap<Comments, TotalCommentsCountDTO>().ReverseMap();
 
             #endregion
         }

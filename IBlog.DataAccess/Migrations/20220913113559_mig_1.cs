@@ -32,6 +32,7 @@ namespace IBlog.DataAccess.Migrations
                     Password = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Explanation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AvatarImage = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CreationDatetime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(6118)),
                     RoleType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -46,7 +47,7 @@ namespace IBlog.DataAccess.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Explanation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(3835)),
+                    PublishDateTime = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(1064)),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
@@ -96,7 +97,7 @@ namespace IBlog.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 8, 8, 15, 59, 19, DateTimeKind.Local).AddTicks(8706)),
+                    CreationDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(4445)),
                     Status = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -142,7 +143,7 @@ namespace IBlog.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     InteracitonType = table.Column<bool>(type: "bit", nullable: false),
-                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 8, 8, 15, 59, 20, DateTimeKind.Local).AddTicks(194)),
+                    InteractionDate = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2022, 9, 13, 14, 35, 58, 976, DateTimeKind.Local).AddTicks(5660)),
                     IpAddress = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -162,17 +163,17 @@ namespace IBlog.DataAccess.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("716091b1-a0f7-460b-9d1c-7f45287cf3fe"), "Oyun" },
-                    { new Guid("bb76254e-64ec-42a2-880d-f01b4784dd8e"), "Spor" }
+                    { new Guid("739a8565-1df4-4c5b-be8a-73e9b81ab7b3"), "Oyun" },
+                    { new Guid("9bda077c-2be9-4170-80ad-98164040c761"), "Spor" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AvatarImage", "Email", "Explanation", "Name", "Password", "RoleType", "Surname" },
+                columns: new[] { "Id", "AvatarImage", "CreationDatetime", "Email", "Explanation", "Name", "Password", "RoleType", "Surname" },
                 values: new object[,]
                 {
-                    { new Guid("475a613b-f8d4-45ee-82ee-1003f267814e"), "b91f2c8d-1c82-4b86-9bb7-44ee5649bb20.jpg", "yucar@ozatashipyard.com", "Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test ", "Yusuf", "58775877", 0, "Uçar" },
-                    { new Guid("577d0a6c-cfbe-4d1e-940a-50b9d1e6d5a3"), "d7f30a1e-a537-45b6-899c-dee04ecc555b.jpg", "earaci@ozatashipyard.com", "Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama777777777585858", "Enes Oğuzhan", "58775877", 1, "Aracı" }
+                    { new Guid("475a613b-f8d4-45ee-82ee-1003f267814e"), "b91f2c8d-1c82-4b86-9bb7-44ee5649bb20.jpg", new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(8296), "yucar@gmail.com", "Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test ", "Yusuf", "58775877", 0, "Uçar" },
+                    { new Guid("577d0a6c-cfbe-4d1e-940a-50b9d1e6d5a3"), "d7f30a1e-a537-45b6-899c-dee04ecc555b.jpg", new DateTime(2022, 9, 13, 14, 35, 58, 975, DateTimeKind.Local).AddTicks(8302), "earaci@gmail.com", "Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama777777777585858", "Enes Oğuzhan", "58775877", 1, "Aracı" }
                 });
 
             migrationBuilder.CreateIndex(

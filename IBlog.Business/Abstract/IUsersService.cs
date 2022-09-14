@@ -1,5 +1,6 @@
 ﻿using IBlog.Core.Results;
 using IBlog.Entities;
+using IBlog.Entities.DTO.PanelComponent;
 using IBlog.Entities.DTO.Users;
 
 namespace IBlog.Business.Abstract
@@ -18,6 +19,8 @@ namespace IBlog.Business.Abstract
         public Task<PasswordUpdateDTO> GetUserPassword(Guid userId);
         public Task<IResult> UpdateUserPassword(PasswordUpdateDTO passwordUpdateDTO);
         public Task<IList<AuthorsCartDTO>> GetAuthorsCart();
+        public Task<TotalUsersCountDTO> TotalUsersCount();
+        public Task<NewUsersDTO> NewUsers();
 
     }
 }

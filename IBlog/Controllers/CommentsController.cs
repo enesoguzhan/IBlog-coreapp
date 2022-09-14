@@ -20,7 +20,7 @@ namespace IBlog.UI.Controllers
 
         public IActionResult InsertComment(CommentsInsertDTO commentsInsertDTO)
         {
-            TempData["Message"] = _commentsService.AddAsync(commentsInsertDTO).Result.Message;
+            var result = _commentsService.AddAsync(commentsInsertDTO).Result;
             return Redirect($"/blogs/detail/{commentsInsertDTO.BlogId}");
         }
     }

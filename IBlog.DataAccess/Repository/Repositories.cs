@@ -1,7 +1,5 @@
 ﻿using IBlog.Core.Abstract;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using System;
 using System.Linq.Expressions;
 
 namespace IBlog.DataAccess.Repository

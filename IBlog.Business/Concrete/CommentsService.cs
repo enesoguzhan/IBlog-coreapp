@@ -5,6 +5,7 @@ using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
 using IBlog.Entities.DTO.Comments;
+using IBlog.Entities.DTO.PanelComponent;
 
 namespace IBlog.Business.Concrete
 {
@@ -31,6 +32,18 @@ namespace IBlog.Business.Concrete
                 datass.UserId = new Guid(_userManager.GetUserClaims().Id);
             }
             return await _unitOfWork.commentsRepo.AsyncAdd(datass).ContinueWith(s => _unitOfWork.SaveChanges()).Result;
+        }
+
+        public async Task<TotalCommentsCountDTO> TotalCommentsCount()
+        {
+            int count = _unitOfWork.commentsRepo.AsyncGetAll().Result.Count;
+
+            TotalCommentsCountDTO totalBlogsCount = new()
+            {
+                CommentsCount = count
+            };
+
+            return await Task.Run(() => totalBlogsCount);
         }
     }
 }
