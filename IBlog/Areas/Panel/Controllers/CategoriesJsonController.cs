@@ -1,5 +1,6 @@
 ﻿using IBlog.Business.Abstract;
 using IBlog.Entities;
+using IBlog.Entities.DTO.Categories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,8 @@ namespace IBlog.UI.Areas.Panel.Controllers
             this.categoriesService = categoriesService;
         }
 
-        public JsonResult CategoriesInsert(Categories categories)
-        {
-            categories.Id = Guid.NewGuid();
+        public JsonResult CategoriesInsert(CategoriesInsertDTO categories)
+        {     
             var query = categoriesService.AddAsync(categories).Result;
             if (query.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
             {
@@ -28,7 +28,7 @@ namespace IBlog.UI.Areas.Panel.Controllers
             else
                 return Json(query);
         }
-        public JsonResult CategoriesUpdate(Categories categories)
+        public JsonResult CategoriesUpdate(CategoriesUpdateDTO categories)
         {
             var query = categoriesService.UpdateAsync(categories).Result;
             if (query.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)

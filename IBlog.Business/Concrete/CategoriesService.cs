@@ -20,17 +20,18 @@ namespace IBlog.Business.Concrete
             this.mapper = mapper;
         }
 
-        public async Task<IResult> AddAsync(Categories data)
+        public async Task<IResult> AddAsync(CategoriesInsertDTO data)
         {
-            IList<Categories> dataList = await unitOfWork.categoriesRepo.AsyncGetAll();
-            foreach (var item in dataList)
+            IList<Categories> getAllCategories = await unitOfWork.categoriesRepo.AsyncGetAll();
+            foreach (var category in getAllCategories)
             {
-                if (item.Name.ToLower() == data.Name.ToLower())
+                if (category.Name.ToLower() == data.Name.ToLower())
                 {
                     return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Aynı İsimde Kategori Olamaz");
                 }
             }
-            return await unitOfWork.categoriesRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges().Result);
+            Categories categories = mapper.Map<Categories>(data);
+            return await unitOfWork.categoriesRepo.AsyncAdd(categories).ContinueWith(s => unitOfWork.SaveChanges().Result);
         }
 
         public async Task<IResult> DeleteAsync(Guid id)
@@ -66,18 +67,10 @@ namespace IBlog.Business.Concrete
             return await Task.Run(() => totalCategoriesCount);
         }
 
-        public async Task<IResult> UpdateAsync(Categories data)
+        public async Task<IResult> UpdateAsync(CategoriesUpdateDTO data)
         {
-            IList<Categories> dataList = await unitOfWork.categoriesRepo.AsyncGetAll();
-            foreach (var item in dataList)
-            {
-                if (item.Name.ToLower() == data.Name.ToLower())
-                {
-                    return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Aynı İsimde Kategori Olamaz");
-                }
-            }
-            return await unitOfWork.categoriesRepo.AsyncUpdate(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
-
+            Categories categories = mapper.Map<Categories>(data);
+            return await unitOfWork.categoriesRepo.AsyncUpdate(categories).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
     }
 }
