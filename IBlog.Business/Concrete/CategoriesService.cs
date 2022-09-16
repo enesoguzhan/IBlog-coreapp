@@ -22,7 +22,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IResult> AddAsync(Categories data)
         {
-            var dataList = unitOfWork.categoriesRepo.AsyncGetAll().Result;
+            IList<Categories> dataList = await unitOfWork.categoriesRepo.AsyncGetAll();
             foreach (var item in dataList)
             {
                 if (item.Name.ToLower() == data.Name.ToLower())
@@ -30,7 +30,7 @@ namespace IBlog.Business.Concrete
                     return Result.FactoryResult(Core.Results.ComplexTypes.StatusCode.Error, "Aynı İsimde Kategori Olamaz");
                 }
             }
-            return await unitOfWork.categoriesRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges()).Result;
+            return await unitOfWork.categoriesRepo.AsyncAdd(data).ContinueWith(s => unitOfWork.SaveChanges().Result);
         }
 
         public async Task<IResult> DeleteAsync(Guid id)
@@ -45,7 +45,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<CategoriesListCountDTO>> GetCategoriesCount()
         {
-            var data = unitOfWork.categoriesRepo.AsyncGetAll(s => s.Blogs.Count > 0, s => s.Blogs.Where(s => s.Status == true)).Result;
+            IList<Categories> data = await unitOfWork.categoriesRepo.AsyncGetAll(s => s.Blogs.Count > 0, s => s.Blogs.Where(s => s.Status == true));
 
             return await Task.Run(() => mapper.Map<IList<CategoriesListCountDTO>>(data));
         }
@@ -68,7 +68,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IResult> UpdateAsync(Categories data)
         {
-            var dataList = unitOfWork.categoriesRepo.AsyncGetAll().Result;
+            IList<Categories> dataList = await unitOfWork.categoriesRepo.AsyncGetAll();
             foreach (var item in dataList)
             {
                 if (item.Name.ToLower() == data.Name.ToLower())

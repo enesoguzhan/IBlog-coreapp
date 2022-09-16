@@ -41,18 +41,18 @@ namespace IBlog.Business.Concrete
         public async Task<AuthorsBlogsDTO> GetAuthorsBlogs(Guid userId)
         {
             // Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId, s => s.Blogs).Result;
-            Users data = unitOfWork.usersRepo.IncludeMultiple(s => s.Id == userId, s => s.Include(s => s.Blogs)
+            Users data = await unitOfWork.usersRepo.IncludeMultiple(s => s.Id == userId, s => s.Include(s => s.Blogs)
             .ThenInclude(s => s.Images).
             Include(s => s.Blogs).
             ThenInclude(s => s.Categories)
-            .Include(s => s.SocialLinks)).Result;
+            .Include(s => s.SocialLinks));
             return await Task.Run(() => mapper.Map<AuthorsBlogsDTO>(data));
         }
 
-        public Task<IList<AuthorsCartDTO>> GetAuthorsCart()
+        public async Task<IList<AuthorsCartDTO>> GetAuthorsCart()
         {
-            var data = unitOfWork.usersRepo.AsyncGetAll().Result;
-            return Task.Run(() => mapper.Map<IList<AuthorsCartDTO>>(data));
+            IList<Users> data = await unitOfWork.usersRepo.AsyncGetAll();
+            return await Task.Run(() => mapper.Map<IList<AuthorsCartDTO>>(data));
         }
 
         public async Task<Users> GetUser(Guid id)
@@ -60,15 +60,15 @@ namespace IBlog.Business.Concrete
             return await unitOfWork.usersRepo.AsyncFirst(s => s.Id == id, s => s.SocialLinks);
         }
 
-        public Task<PasswordUpdateDTO> GetUserPassword(Guid userId)
+        public async Task<PasswordUpdateDTO> GetUserPassword(Guid userId)
         {
-            Users data = unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId).Result;
-            return Task.Run(() => mapper.Map<PasswordUpdateDTO>(data));
+            Users data = await unitOfWork.usersRepo.AsyncFirst(s => s.Id == userId);
+            return await Task.Run(() => mapper.Map<PasswordUpdateDTO>(data));
         }
 
         public async Task<IList<UserListDTO>> GetUsersList()
         {
-            var data = unitOfWork.usersRepo.AsyncGetAll(null, s => s.Blogs).Result;
+            IList<Users> data = await unitOfWork.usersRepo.AsyncGetAll(null, s => s.Blogs);
             return await Task.Run(() => mapper.Map<IList<UserListDTO>>(data));
         }
 
@@ -77,10 +77,10 @@ namespace IBlog.Business.Concrete
             return await unitOfWork.usersRepo.Login(Email, Password);
         }
 
-        public Task<NewUsersDTO> NewUsers()
+        public async Task<NewUsersDTO> NewUsers()
         {
             Users user = unitOfWork.usersRepo.AsyncGetAll().Result.OrderByDescending(s => s.CreationDatetime).FirstOrDefault();
-            return Task.Run(() => mapper.Map<NewUsersDTO>(user));
+            return await Task.Run(() => mapper.Map<NewUsersDTO>(user));
         }
 
         public async Task<string> PaswordForgotAsync(string Email)

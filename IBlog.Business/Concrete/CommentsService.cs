@@ -24,14 +24,21 @@ namespace IBlog.Business.Concrete
 
         public async Task<IResult> AddAsync(CommentsInsertDTO data)
         {
-            var datass = _mapper.Map<Comments>(data);
-            if (datass != null)
+            Comments mapperData = _mapper.Map<Comments>(data);
+            if (mapperData != null)
             {
-                datass.Id = Guid.NewGuid();
-                datass.CreationDate = DateTime.Now;
-                datass.UserId = new Guid(_userManager.GetUserClaims().Id);
+                mapperData.Id = Guid.NewGuid();
+                mapperData.CreationDate = DateTime.Now;
+                mapperData.UserId = new Guid(_userManager.GetUserClaims().Id);
             }
-            return await _unitOfWork.commentsRepo.AsyncAdd(datass).ContinueWith(s => _unitOfWork.SaveChanges()).Result;
+            return await _unitOfWork.commentsRepo.AsyncAdd(mapperData).ContinueWith(s => _unitOfWork.SaveChanges()).Result;
+        }
+
+        public async Task<IList<CommentsListGetByBlogDTO>> GetCommentsByBlog(Guid BlogID)
+        {
+            IList<Comments> data = await _unitOfWork.commentsRepo.AsyncGetAll(s => s.BlogId == BlogID, s => s.Blog, s => s.User);
+
+            return await Task.Run(() => _mapper.Map<IList<CommentsListGetByBlogDTO>>(data));
         }
 
         public async Task<TotalCommentsCountDTO> TotalCommentsCount()

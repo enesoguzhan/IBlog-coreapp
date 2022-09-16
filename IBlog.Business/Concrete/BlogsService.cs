@@ -75,7 +75,7 @@ namespace IBlog.Business.Concrete
 
         public async Task<IResult> UpdateAsync(BlogsUpdateDTO data)
         {
-            var updateQuery = unitOfWork.blogsRepo.AsyncFirst(s => s.Id == data.Id, s => s.Images, s => s.User).Result;
+            Blogs updateQuery = await unitOfWork.blogsRepo.AsyncFirst(s => s.Id == data.Id, s => s.Images, s => s.User);
             if (updateQuery != null)
             {
                 updateQuery.Name = data.Name;
@@ -89,19 +89,19 @@ namespace IBlog.Business.Concrete
 
         public async Task<IList<BlogsListDTO>> GetListBlog()
         {
-            var data = unitOfWork.blogsRepo.AsyncGetAll(null, s => s.Categories, s => s.User).Result;
+            IList<Blogs> data = await unitOfWork.blogsRepo.AsyncGetAll(null, s => s.Categories, s => s.User,s=>s.Comments);
             return await Task.Run(() => mapper.Map<IList<BlogsListDTO>>(data));
         }
 
         public async Task<IList<BlogsListDTO>> GetListBlogByUser(Guid id)
         {
-            var data = unitOfWork.blogsRepo.AsyncGetAll(s => s.UserId == id, s => s.Categories).Result;
+            IList<Blogs> data = await unitOfWork.blogsRepo.AsyncGetAll(s => s.UserId == id, s => s.Categories);
             return await Task.Run(() => mapper.Map<IList<BlogsListDTO>>(data));
         }
 
         public async Task<BlogsUpdateDTO> GetUpdateBlogs(Guid Id)
         {
-            var data = unitOfWork.blogsRepo.AsyncFirst(s => s.Id == Id, s => s.Images).Result;
+            Blogs data = await unitOfWork.blogsRepo.AsyncFirst(s => s.Id == Id, s => s.Images);
 
             return await Task.Run(() => mapper.Map<BlogsUpdateDTO>(data));
         }
@@ -118,7 +118,7 @@ namespace IBlog.Business.Concrete
 
         public Task<LastAddedBlogDTO> LastAddedBlog()
         {
-            Blogs blog = unitOfWork.blogsRepo.AsyncGetAll(null,s=>s.Images).Result.OrderByDescending(s => s.PublishDateTime).FirstOrDefault();
+            Blogs blog = unitOfWork.blogsRepo.AsyncGetAll(null, s => s.Images).Result.OrderByDescending(s => s.PublishDateTime).FirstOrDefault();
             return Task.Run(() => mapper.Map<LastAddedBlogDTO>(blog));
         }
     }

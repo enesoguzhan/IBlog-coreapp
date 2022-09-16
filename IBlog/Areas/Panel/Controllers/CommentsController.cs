@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using IBlog.Business.Abstract;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IBlog.UI.Areas.Panel.Controllers
@@ -7,10 +8,19 @@ namespace IBlog.UI.Areas.Panel.Controllers
     [Authorize(Roles = "Yönetici,Yazar")]
     public class CommentsController : Controller
     {
-        public IActionResult Index()
+        private readonly ICommentsService _commentsService;
+
+        public CommentsController(ICommentsService commentsService)
+        {
+            _commentsService = commentsService;
+        }
+
+        [HttpGet]
+        [Route("/panel/comments/Index/{BlogId:Guid}")]
+        public IActionResult Index(Guid BlogId)
         {
             ViewBag.Title = "Yorumlar";
-            return View();
+            return View(_commentsService.GetCommentsByBlog(BlogId).Result);
         }
     }
 }

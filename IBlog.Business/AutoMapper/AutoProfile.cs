@@ -65,6 +65,10 @@ namespace IBlog.Business.AutoMapper
             #region Comments
             CreateMap<Comments, CommentsInsertDTO>().ReverseMap();
             CreateMap<Comments, TotalCommentsCountDTO>().ReverseMap();
+            CreateMap<Comments, CommentsListGetByBlogDTO>()
+                .ForMember(destination => destination.BlogName, option => option.MapFrom(s => s.Blog.Name))
+                .ForMember(destination => destination.UserNameSurname, option => option.MapFrom(s => s.User.Name + " " + s.User.Surname))
+                .ReverseMap();
 
             #endregion
         }

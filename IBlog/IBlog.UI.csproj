@@ -7,14 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
+    <Compile Remove="Areas\Panel\Data\**" />
+    <Compile Remove="Areas\Panel\Models\**" />
+    <Content Remove="Areas\Panel\Data\**" />
+    <Content Remove="Areas\Panel\Models\**" />
+    <EmbeddedResource Remove="Areas\Panel\Data\**" />
+    <EmbeddedResource Remove="Areas\Panel\Models\**" />
+    <None Remove="Areas\Panel\Data\**" />
+    <None Remove="Areas\Panel\Models\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Panel\Data\" />
-    <Folder Include="Areas\Panel\Models\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>
