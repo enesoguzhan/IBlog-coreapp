@@ -38,7 +38,7 @@
                                         <td>@item.Name</td>
                                         <td>
                                             <a class="btn btn-sm btn-outline btn-success" href="javascript:UpdateModal('@item.Id','@item.Name')">Güncelle</a>
-                                            <a class="btn btn-sm btn-outline btn-danger" href="/panel/categories/delete/@item.Id">Sil</a>
+                                            <a class="btn btn-sm btn-outline btn-danger" href="javascript:DeleteItem('@item.Id')">Sil</a>
                                         </td>
                                     </tr>
                                 }
@@ -146,5 +146,12 @@
                 $('#modalDanger').modal();
             }
         });
+    }
+
+    function DeleteItem(itemId) {
+
+        $('#modalErrorMessage').html(`Kategoriyi Silmek İstediğinize Emin Misiniz ?`);
+        $('#modalDanger').modal();
+        $('#modalDangerFooter').html(`<a class="btn btn-sm btn-outline btn-danger" href="/panel/categories/delete/${itemId}">Sil</a>`);
     }
 </script>

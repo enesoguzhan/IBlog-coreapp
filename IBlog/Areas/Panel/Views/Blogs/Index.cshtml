@@ -65,7 +65,7 @@
                                         </td>
                                         <td style="text-align:center;">
                                             <a class="btn btn-sm btn-outline btn-success" href="/Panel/Blogs/Update/@item.Id">Güncelle</a>
-                                            <a class="btn btn-sm btn-outline btn-danger" href="/Panel/Blogs/Delete/@item.Id">Sil</a>
+                                            <a class="btn btn-sm btn-outline btn-danger" href="javascript:DeleteItem('@item.Id')">Sil</a>
                                         </td>
                                     </tr>
                                 }
@@ -77,3 +77,11 @@
         </div>
     </div>
 </div>
+
+<script>
+    function DeleteItem(itemId) {
+        $('#modalErrorMessage').html(`Blog'u Silmek İstediğinize Emin Misiniz ?`);
+        $('#modalDanger').modal();
+        $('#modalDangerFooter').html(`<a class="btn btn-sm btn-outline btn-danger" href="/Panel/Blogs/Delete/${itemId}">Sil</a>`);
+    }
+</script>

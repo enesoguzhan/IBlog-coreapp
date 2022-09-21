@@ -1,6 +1,4 @@
-﻿using IBlog.Business.EmailService;
-using IBlog.Business.UserManager;
-using IBlog.Entities.DTO.Email;
+﻿using IBlog.Business.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,25 +8,18 @@ namespace IBlog.Areas.Panel.Controllers
     [Authorize(Roles = "Yönetici,Yazar")]
     public class HomeController : Controller
     {
-        readonly IEmailService emailService;
 
-        public HomeController(IEmailService emailService)
-        {
-            this.emailService = emailService;
+        private readonly IUsersService _usersService;
+
+        public HomeController( IUsersService usersService)
+        {      
+            _usersService = usersService;
         }
 
         public IActionResult Index()
         {
-            EmailDTO email = new()
-            {
-                To = "",
-                Body = "<h3> IBlog'a Hoşgeldin</h3>",
-                Subject = "IBlog Hoşgeldin"
-            };
-
-          //  emailService.SendEmail(email);
+            _usersService.UserControl(); 
             ViewBag.Title = "Kategori";
-
 
             return View();
         }

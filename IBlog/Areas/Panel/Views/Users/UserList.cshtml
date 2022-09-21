@@ -43,15 +43,23 @@
                                         <td style="text-align:center;">@item.Email</td>
                                         <td style="text-align:center;">@item.BlogsCount</td>
                                         <td style="text-align:center;">
-                                            <a class="btn btn-sm btn-outline btn-danger" href="/panel/users/Delete/@item.Id">Sil</a>
+                                            <a class="btn btn-sm btn-outline btn-danger" href="javascript:DeleteItem('@item.Id')">Sil</a>
                                         </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                    </div>
+                    </div>s
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function DeleteItem(itemId) {
+        $('#modalErrorMessage').html(`Kullanıcıyı Silmek İstediğinize Emin Misiniz ?`);
+        $('#modalDanger').modal();
+        $('#modalDangerFooter').html(`<a class="btn btn-sm btn-outline btn-danger" href="/panel/users/delete/${itemId}">Sil</a>`);
+    }
+</script>

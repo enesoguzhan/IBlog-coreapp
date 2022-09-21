@@ -57,5 +57,10 @@ namespace IBlog.Business.UserManager
             };
             httpContextAccessor.HttpContext.SignInAsync(httpContextAccessor.HttpContext.User, cookiesTime);
         }
+
+        public async void UserSingOut()
+        {
+            await httpContextAccessor.HttpContext.SignOutAsync();
+        }
     }
 }

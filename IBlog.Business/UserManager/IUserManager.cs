@@ -11,5 +11,6 @@ namespace IBlog.Business.UserManager
     {
         public UserClaims GetUserClaims();
         public void UserAvatarImages(string name);
+        public void UserSingOut();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IBlog.Business.Abstract;
+using IBlog.Business.UserManager;
 using IBlog.Core.Results;
 using IBlog.DataAccess.UnitOfWorks;
 using IBlog.Entities;
@@ -13,11 +14,13 @@ namespace IBlog.Business.Concrete
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly IUserManager _userManager;
 
-        public UsersService(IUnitOfWork unitOfWork, IMapper mapper)
+        public UsersService(IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<IResult> AddAsync(Users data)
@@ -124,6 +127,15 @@ namespace IBlog.Business.Concrete
                 users.Password = passwordUpdateDTO.Password;
             }
             return await unitOfWork.usersRepo.AsyncUpdate(users).ContinueWith(s => unitOfWork.SaveChanges()).Result;
+        }
+
+        public void UserControl()
+        {
+            Users? user = unitOfWork.usersRepo.AsyncFirst(s => s.Id.ToString() == _userManager.GetUserClaims().Id).Result;
+            if (user == null)
+            {
+                _userManager.UserSingOut();
+            }
         }
     }
 }

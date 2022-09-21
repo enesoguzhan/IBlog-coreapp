@@ -21,6 +21,6 @@ namespace IBlog.Business.Abstract
         public Task<IList<AuthorsCartDTO>> GetAuthorsCart();
         public Task<TotalUsersCountDTO> TotalUsersCount();
         public Task<NewUsersDTO> NewUsers();
-
+        public void UserControl();
     }
 }

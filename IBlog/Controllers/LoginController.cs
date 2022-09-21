@@ -30,7 +30,7 @@ namespace IBlog.UI.Controllers
                 var claims = new List<Claim>();
                 claims.Add(new Claim("Id", user.Id.ToString()));
                 claims.Add(new Claim("NameSurnameFirstChar", user.Name.Substring(0, 1) + user.Surname.Substring(0, 1)));
-                claims.Add(new Claim("AvatarImage", user.AvatarImage ?? ""));
+                claims.Add(new Claim("AvatarImage", user.AvatarImage ?? "profilepic.png"));
                 claims.Add(new Claim(ClaimTypes.Name, user.Name + " " + user.Surname));
                 if (user.RoleType == 1)
                     claims.Add(new Claim(ClaimTypes.Role, "Yönetici"));
