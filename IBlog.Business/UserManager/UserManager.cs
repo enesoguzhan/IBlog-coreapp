@@ -56,11 +56,6 @@ namespace IBlog.Business.UserManager
                 IsPersistent = true,
             };
             httpContextAccessor.HttpContext.SignInAsync(httpContextAccessor.HttpContext.User, cookiesTime);
-        }
-
-        public async void UserSingOut()
-        {
-            await httpContextAccessor.HttpContext.SignOutAsync();
-        }
+        }       
     }
 }

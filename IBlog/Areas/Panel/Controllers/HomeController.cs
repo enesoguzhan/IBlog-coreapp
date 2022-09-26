@@ -17,10 +17,8 @@ namespace IBlog.Areas.Panel.Controllers
         }
 
         public IActionResult Index()
-        {
-            _usersService.UserControl(); 
+        {       
             ViewBag.Title = "Kategori";
-
             return View();
         }
     }

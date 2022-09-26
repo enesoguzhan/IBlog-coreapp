@@ -60,9 +60,11 @@ namespace IBlog.Business.AutoMapper
 
             #region Categories
             CreateMap<Categories, TotalCategoriesCountDTO>().ReverseMap();
+
             CreateMap<Categories, CategoriesInsertDTO>()
                 .ReverseMap()
                 .ForMember(destination => destination.Id, option => option.MapFrom(s => Guid.NewGuid()));
+
             CreateMap<Categories, CategoriesUpdateDTO>().ReverseMap();
             #endregion
 

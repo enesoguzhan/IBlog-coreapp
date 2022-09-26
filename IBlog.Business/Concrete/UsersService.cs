@@ -128,14 +128,6 @@ namespace IBlog.Business.Concrete
             }
             return await unitOfWork.usersRepo.AsyncUpdate(users).ContinueWith(s => unitOfWork.SaveChanges()).Result;
         }
-
-        public void UserControl()
-        {
-            Users? user = unitOfWork.usersRepo.AsyncFirst(s => s.Id.ToString() == _userManager.GetUserClaims().Id).Result;
-            if (user == null)
-            {
-                _userManager.UserSingOut();
-            }
-        }
+       
     }
 }

@@ -3,9 +3,12 @@ using FluentValidation.AspNetCore;
 using IBlog.Business.AutoMapper;
 using IBlog.Business.IoC;
 using IBlog.Business.Validators.Blog;
+using IBlog.DataAccess;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDbContext<IBlogContext>();
 builder.Services.IocService();
 builder.Services.AddAutoMapper(typeof(AutoProfile));
 builder.Services.AddControllersWithViews().AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<BlogsValidator>());

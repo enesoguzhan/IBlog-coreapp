@@ -10,9 +10,7 @@ namespace IBlog.Business.IoC
     public static class Container
     {
         public static IServiceCollection IocService(this IServiceCollection services)
-        {
-            services.AddHttpContextAccessor();
-            services.AddDbContext<IBlogContext>();
+        {    
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBlogsService, BlogsService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
