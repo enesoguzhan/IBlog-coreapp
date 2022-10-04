@@ -25,7 +25,7 @@
                 Password = "58775877",
                 CreationDatetime = DateTime.Now,
                 Explanation = "Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test Yusuf Uçar Açıklama Test ",
-                AvatarImage = "b91f2c8d-1c82-4b86-9bb7-44ee5649bb20.jpg",
+                AvatarImage = "profilepic.png",
                 RoleType = 0
             },
             new Users
@@ -37,7 +37,7 @@
                 Password = "58775877",
                 CreationDatetime= DateTime.Now,
                 Explanation = "Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama Test Açıklama777777777585858",
-                AvatarImage = "d7f30a1e-a537-45b6-899c-dee04ecc555b.jpg",
+                AvatarImage = "profilepic.png",
                 RoleType = 1
             });
             builder.ToTable("Users");

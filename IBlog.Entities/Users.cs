@@ -8,7 +8,7 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string Explanation { get; set; }
-        public string AvatarImage { get; set; } = "profilepic.png";
+        public string? AvatarImage { get; set; } = "profilepic.png";
         public DateTime CreationDatetime { get; set; }
         public int RoleType { get; set; }
         public List<Blogs> Blogs { get; set; }  

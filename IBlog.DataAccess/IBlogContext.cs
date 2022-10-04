@@ -1,9 +1,16 @@
 ﻿using IBlog.DataAccess.Mappings;
+using Microsoft.Extensions.Configuration;
 
 namespace IBlog.DataAccess
 {
     public class IBlogContext : DbContext
     {
+        private readonly IConfiguration _configuration;
+
+        public IBlogContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public DbSet<Blogs> Blogs { get; set; }
         public DbSet<Categories> Categories { get; set; }
@@ -11,13 +18,11 @@ namespace IBlog.DataAccess
         public DbSet<Interactions> Interactions { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Images> Images { get; set; }
-        public DbSet<SocialLinks> SocialLinks { get; set; }
+        public DbSet<SocialLinks> SocialLinks { get; set; }       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // optionsBuilder.UseSqlServer(configuration.GetConnectionString("ConnectionStringSql"));
-            optionsBuilder.UseSqlServer("Server=LT199;Database=IBlogDb;Trusted_Connection=True;");
-            // optionsBuilder.UseSqlServer("Server=DESKTOP-58;Database=IBlogDb;Trusted_Connection=True;");
+             optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ConnectionStringSql"));         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
