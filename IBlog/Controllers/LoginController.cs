@@ -66,7 +66,7 @@ namespace IBlog.UI.Controllers
             var result = usersService.AddAsync(customer).Result;
             if (result.StatusCode == Core.Results.ComplexTypes.StatusCode.Success)
             {
-                TempData["Message"] = result.Message;
+                TempData["Message"] = "Kayıt İşlemi Başarılı";
                 return Redirect("/login/Index");
             }
             else
